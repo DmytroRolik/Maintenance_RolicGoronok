@@ -68,6 +68,9 @@
     <Compile Include="AddNewOwner.xaml.cs">
       <DependentUpon>AddNewOwner.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Maintenance.cs">
+      <DependentUpon>Maintenance.dbml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\FifthPage.xaml.cs">
       <DependentUpon>FifthPage.xaml</DependentUpon>
     </Compile>
@@ -79,6 +82,9 @@
     </Compile>
     <Compile Include="Pages\BidClient.xaml.cs">
       <DependentUpon>BidClient.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SeventhPage.xaml.cs">
+      <DependentUpon>SeventhPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\SecondQuery.xaml.cs">
       <DependentUpon>SecondQuery.xaml</DependentUpon>
@@ -143,6 +149,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\SeventhPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Pages\SecondQuery.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

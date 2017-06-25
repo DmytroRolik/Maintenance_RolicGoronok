@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Maintenance_RolicGoronok"
         mc:Ignorable="d"
-        Title="Техобслуживание" Height="350" Width="1000" Style="{DynamicResource window}">
+        Title="Техобслуживание" Height="350" Width="1030" Style="{DynamicResource window}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -48,6 +48,8 @@
             <Button ToolTip="Распространенная" 
                     Margin="5 0 0 0" Content="Распространенная" Width="145" Tag="Распространенная" Height="30" Click="queryButton_click"/>
 
+            <Button ToolTip="Кол-во работников" 
+                    Margin="5 0 0 0" Content="Кол-во работников" Width="145" Tag="КоличествоРаботников" Height="30" Click="queryButton_click"/>
         </ToolBar>
         
 

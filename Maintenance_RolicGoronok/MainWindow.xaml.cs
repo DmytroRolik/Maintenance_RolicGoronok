@@ -93,6 +93,7 @@ namespace Maintenance_RolicGoronok
                 case "Рабочий": frame.NavigationService.Navigate(new Uri("Pages/FourthQuery.xaml", UriKind.Relative)); break;
                 case "Неисправности": frame.NavigationService.Navigate(new Uri("Pages/FifthPage.xaml", UriKind.Relative)); break;
                 case "Распространенная": frame.NavigationService.Navigate(new Uri("SixthPage.xaml", UriKind.Relative)); break;
+                case "КоличествоРаботников": frame.NavigationService.Navigate(new Uri("Pages/SeventhPage.xaml", UriKind.Relative)); break;
             }
             
             tabDynamic.DataContext = null;
