@@ -40,7 +40,8 @@ namespace Maintenance_RolicGoronok
             CreateAndInsertTable createInsertTable = new CreateAndInsertTable();
             createInsertTable.StartConnection();
 
-            
+            editClient.Click += (s, en) => new EditClient().ShowDialog();
+            newEmp.Click += (s, en) => new AddEmployee().ShowDialog();
         }//MainWindow_Loaded
 
         // При нажатии на кнопку закрыть вкладку
@@ -52,10 +53,8 @@ namespace Maintenance_RolicGoronok
             // С помощью имени получить объект TabItem из TabControl с именем tabDynamic
             TabItem tabItem = tabDynamic.Items.Cast<TabItem>().Where(i => i.Name.Equals(tabName)).SingleOrDefault();
 
-            if (tabItem != null)
-            {
-                if (MessageBox.Show(string.Format("Вы уверены что хотите закрыть вкладку {0} ?",tabItem.Header), "Закрытие вкладки", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                {
+            if (tabItem != null) {
+                if (MessageBox.Show(string.Format("Вы уверены что хотите закрыть вкладку {0} ?", tabItem.Header), "Закрытие вкладки", MessageBoxButton.YesNo) == MessageBoxResult.Yes) {
                     tabDynamic.DataContext = null;                            // Отсоединяемся
                     _tabItems.Remove(tabItem);                                // Удалаем  TabItem из коллекции
                     tabDynamic.DataContext = _tabItems;                       // Присоединяемся
@@ -71,31 +70,32 @@ namespace Maintenance_RolicGoronok
         private void queryButton_click(object sender, RoutedEventArgs e)
         {
             // Получаем контент нажатой кнопки
-            string buttonTag = ((Button)sender).Tag.ToString();
+            string buttonName = ((Button)sender).Name.ToString();
 
             // Количество вкладок с именем name
-            int count = _tabItems.Where(t => buttonTag.Contains(t.Name)).Count(); 
+            int count = _tabItems.Where(t => buttonName.Contains(t.Name)).Count();
 
             // Если вкладка с таким именем есть
             if (count > 0) return;
 
             // Создаем вкладку
-            TabItem tabItem =  CreateTabItem(buttonTag);
+            TabItem tabItem = CreateTabItem(buttonName);
 
 
             Frame frame = new Frame();
-            switch (buttonTag)
+            switch (buttonName)
             {
-                case "Владелец": frame.NavigationService.Navigate(new Uri("Pages/FirstQuery.xaml", UriKind.Relative));  break;
-                case "Автомобиль": frame.NavigationService.Navigate(new Uri("Pages/SecondQuery.xaml", UriKind.Relative)); break;
-                case "Заявка": frame.NavigationService.Navigate(new Uri("Pages/BidClient.xaml", UriKind.Relative)); break;
-                case "Неисправность": frame.NavigationService.Navigate(new Uri("Pages/MalfunctionsPage.xaml", UriKind.Relative)); break;
-                case "Рабочий": frame.NavigationService.Navigate(new Uri("Pages/FourthQuery.xaml", UriKind.Relative)); break;
-                case "Неисправности": frame.NavigationService.Navigate(new Uri("Pages/FifthPage.xaml", UriKind.Relative)); break;
-                case "Распространенная": frame.NavigationService.Navigate(new Uri("SixthPage.xaml", UriKind.Relative)); break;
-                case "КоличествоРаботников": frame.NavigationService.Navigate(new Uri("Pages/SeventhPage.xaml", UriKind.Relative)); break;
+                case "tlbtnOwner": frame.NavigationService.Navigate(new Uri("Pages/FirstQuery.xaml", UriKind.Relative)); break;
+                case "tlbtnCar": frame.NavigationService.Navigate(new Uri("Pages/SecondQuery.xaml", UriKind.Relative)); break;
+                case "tlbtnGarbs": frame.NavigationService.Navigate(new Uri("Pages/BidClient.xaml", UriKind.Relative)); break;
+                case "tlbtnMalfunction": frame.NavigationService.Navigate(new Uri("Pages/MalfunctionsPage.xaml", UriKind.Relative)); break;
+                case "tlbtnEmployee": frame.NavigationService.Navigate(new Uri("Pages/FourthQuery.xaml", UriKind.Relative)); break;
+                case "tlbtnBreakages": frame.NavigationService.Navigate(new Uri("Pages/FifthPage.xaml", UriKind.Relative)); break;
+                case "tlbtnCommon": frame.NavigationService.Navigate(new Uri("Pages/SixthPage.xaml", UriKind.Relative)); break;
+                case "tlbtnBids": frame.NavigationService.Navigate(new Uri("AllBid.xaml", UriKind.Relative)); break;
+                case "tlbtnWorkersAmount": frame.NavigationService.Navigate(new Uri("Pages/SeventhPage.xaml", UriKind.Relative)); break;
             }
-            
+
             tabDynamic.DataContext = null;
             tabItem.Content = frame;                         // установка содержимого вкладки
             count = _tabItems.Count;
@@ -108,12 +108,12 @@ namespace Maintenance_RolicGoronok
         // Создаем вкладку
         private TabItem CreateTabItem(string name)
         {
-                // создать TabItem
-                TabItem tabItem = new TabItem();
-                tabItem.Header = string.Format(name);
-                tabItem.Name = string.Format(name);
-                tabItem.HeaderTemplate = tabDynamic.FindResource("TabHeader") as DataTemplate;
-                return tabItem;
+            // создать TabItem
+            TabItem tabItem = new TabItem();
+            tabItem.Header = string.Format(name);
+            tabItem.Name = string.Format(name);
+            tabItem.HeaderTemplate = tabDynamic.FindResource("TabHeader") as DataTemplate;
+            return tabItem;
         }//CreateTabItem
     }
 }

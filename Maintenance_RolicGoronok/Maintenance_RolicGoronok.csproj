@@ -89,7 +89,7 @@
     <Compile Include="Pages\SecondQuery.xaml.cs">
       <DependentUpon>SecondQuery.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SixthPage.xaml.cs">
+    <Compile Include="Pages\SixthPage.xaml.cs">
       <DependentUpon>SixthPage.xaml</DependentUpon>
     </Compile>
     <Page Include="AddModel.xaml">
@@ -157,7 +157,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SixthPage.xaml">
+    <Page Include="Pages\SixthPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
