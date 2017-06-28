@@ -69,9 +69,12 @@ namespace Maintenance_RolicGoronok
 
         private void queryButton_click(object sender, RoutedEventArgs e)
         {
-            // Получаем имя нажатой кнопки
-            string buttonName = ((Button)sender).Name.ToString();
-          
+            string buttonName = "";
+            if (sender is Button) {  buttonName = ((Button)sender).Name.ToString(); } // Получаем имя нажатой кнопки
+
+
+            else if (sender is MenuItem) {  buttonName = ((MenuItem)sender).Name.ToString(); buttonName = buttonName.Remove(0, 1); }
+
 
 
             // Количество вкладок с именем name
@@ -120,5 +123,12 @@ namespace Maintenance_RolicGoronok
             tabItem.HeaderTemplate = tabDynamic.FindResource("TabHeader") as DataTemplate;
             return tabItem;
         }//CreateTabItem
+
+        private void men_Click(object sender, RoutedEventArgs e)
+        {
+            // Получаем имя нажатой кнопки
+            string buttonName = ((MenuItem)sender).Name.ToString();
+           
+        }
     }
 }
