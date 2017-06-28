@@ -19,59 +19,57 @@ namespace Maintenance_RolicGoronok
     /// </summary>
     public partial class AddNewOwner : Window
     {
-        MaintenanceDataContext dc = new MaintenanceDataContext();
+        MaintenanceDataContext dc;
         public AddNewOwner()
         {
             InitializeComponent();
         }
 
-        // При нажатии кнопки добавить
         private void add_Click(object sender, RoutedEventArgs e)
         {
             //проверяет все ли данные введены
-            if (FieldsAreFilled()) { MessageBox.Show("Не все данные введены"); return; }
+            if (FieldsAreNotFilled()) { MessageBox.Show("Не все данные введены"); return; }
 
-            // Добавляем запись в базу
-            dc.Owners.InsertAllOnSubmit(Parsing());
-            try
-            {
-                dc.SubmitChanges();
-                MessageBox.Show($"Новый владелец добавлена в {DateTime.Now}");
-            }
-            catch (Exception f)
-            {
-                MessageBox.Show(f.Message);
-                dc.SubmitChanges();
-            }//try-catch
-        }
-
-        // Метод Parsing извлекаем данные из окна и возвращаем их в виде объкта Owner
-        private List<Owner> Parsing()
-        {
-            var owner = new Owner();
-            owner.Surname = surname.Text;
-            owner.Name = name.Text;
-            owner.Patronymic = patronymic.Text;
-            owner.Address = address.Text;
-
-            return new List<Owner>(new[] { owner });
-        }//Parsing
+            using (dc = new MaintenanceDataContext()) {
+                dc.Persons.InsertOnSubmit(GetPerson());
+                try {
+                    dc.SubmitChanges();
+                    MessageBox.Show("Новый владелец добавлен");
+                }
+                catch (Exception f) {
+                    MessageBox.Show(f.Message);
+                }// try-catch
+            }// using
+        }// add_Click
 
 
         // Метод проверяет все ли данные введены
-        private bool FieldsAreFilled()
+        private bool FieldsAreNotFilled()
         {
             // Имеет ли указанная строка значение null, является ли она пустой строкой или строкой,
             // состоящей только из символов-разделителей.
 
-            if (string.IsNullOrWhiteSpace(surname.Text)
+            return string.IsNullOrWhiteSpace(address.Text)
                 || string.IsNullOrWhiteSpace(name.Text)
                 || string.IsNullOrWhiteSpace(patronymic.Text)
-                || string.IsNullOrWhiteSpace(address.Text)) return true;
+                || string.IsNullOrWhiteSpace(surname.Text)
+                || string.IsNullOrWhiteSpace(passport.Text)
+                || string.IsNullOrWhiteSpace(licen.Text)
+                || dob.SelectedDate == null;
+        }//FieldsAreNotFilled
 
-            return false;
-        }//FieldsAreFilled
+        // Метод Parsing извлекаем данные из окна и возвращаем их в виде объкта Client
+        private Persons GetPerson()
+        {
+            Persons newPerson = new Persons();
+            newPerson.Surname = surname.Text;
+            newPerson.Name = name.Text;
+            newPerson.Patronymic = patronymic.Text;
+            newPerson.Address = address.Text;
+            newPerson.Passport = passport.Text;
+            newPerson.BirthDate = dob.SelectedDate.Value;
 
-
+            return newPerson;
+        }//GetPerson
     }
 }
