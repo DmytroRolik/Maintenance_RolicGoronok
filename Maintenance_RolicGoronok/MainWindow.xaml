@@ -24,24 +24,44 @@
             </MenuItem>
 
             <MenuItem Header="Запросы" Margin="15 0 0 0">
-                <MenuItem  Header="Владелец по номеру" Name="menOwner" Click="men_Click">
+                <MenuItem  Header="Владелец по номеру" Name="_tlbtnOwner" Click="queryButton_click">
                     <MenuItem.Icon>
                         <Image Width="20" Height="20" Source="Image/owner.png" />
                     </MenuItem.Icon>
                 </MenuItem>
 
-                <MenuItem  Header="Марка и год выпуска автомобиля данного владельца" Name="_tlbtnOwner" Click="queryButton_click">
+                <MenuItem  Header="Марка и год выпуска автомобиля данного владельца" Name="_tlbtnCar" Click="queryButton_click">
                     <MenuItem.Icon>
                         <Image Width="20" Height="20" Source="Image/car.png" />
                     </MenuItem.Icon>
                 </MenuItem>
-                
-                
+
+                <MenuItem  Header="Перечень устраненных неисправностей в автомобиле данного владельца" Name="_tlbtnMalfunction" Click="queryButton_click">
+                    <MenuItem.Icon>
+                        <Image Width="20" Height="20" Source="Image/malf.png" />
+                    </MenuItem.Icon>
+
+                </MenuItem>
+
+
+
+
+                <MenuItem  Header="Работник, устранявшый данную неисправность в автомобиле данного клиента, и время ее устранения" Name="_tlbtnEmployee"  Click="queryButton_click">
+                    <MenuItem.Icon>
+                        <Image Width="20" Height="20" Source="Image/Employee.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem  Header="Клиентов, сдавших в ремонт автомобили с указанным типом неисправности" Name="_tlbtnBreakages" Click="queryButton_click"/>
+
+                <MenuItem  Header="Самая распространенная неисправность в автомобилях указанной марки" Name="_tlbtnCommon"  Click="queryButton_click"/>
+
+                <MenuItem  Header="Количество рабочих каждой специальности на станции" Name="_tlbtnWorkersAmount"  Click="queryButton_click"/>
+
             </MenuItem>
             <MenuItem Header="О программе" Margin="15 0 0 0" x:Name="About"/>
         </Menu>
 
-
+        
         <ToolBar Grid.Row="1" >
 
             <Button x:Name="tlbtnOwner" 
@@ -62,34 +82,35 @@
                 <Image Source="Image/car.png" Width="30" Height="30"/>
             </Button>
 
-            <Button ToolTip="Заявка" 
+            <Button ToolTip="Оформить заявку" 
                     Margin="5 0 0 0" 
-                  
                     Width="35" 
                     x:Name="tlbtnGarbs"  
-                    Height="30" 
+                    Height="32" 
                     Click="queryButton_click">
 
+                <Image Source="Image/bids.png" Height="30" Width="30"/>
+            </Button>
+
+            <Button ToolTip="Заявки в обработке" 
+                    Margin="5 0 0 0" 
+                    Width="35"
+                    x:Name="tlbtnBids"
+                    Height="30"
+                    Click="queryButton_click">
                 <Image Source="Image/bid.png" Height="30" Width="30"/>
             </Button>
 
-            <Button ToolTip="Заявки" 
-                    Margin="5 0 0 0" 
-                    Content="Все заявки" 
-                    Width="100"
-                    x:Name="tlbtnBids"
-                    Height="30"
-                    Click="queryButton_click"/>
-
-            <Button ToolTip="Неисправность" 
+            <Button ToolTip="Перечень устраненных неисправностей в автомобиле данного владельца" 
                     Margin="5 0 0 0"
-                    Content="Неисправность"
-                    Width="120"
+                    Width="35"
                     x:Name="tlbtnMalfunction"
                     Height="30"
-                    Click="queryButton_click"/>
+                    Click="queryButton_click">
+                <Image Source="Image/malf.png" Height="30" Width="30"/>
+            </Button>
 
-            <Button ToolTip="Рабочий" 
+            <Button ToolTip="Фамилия, имя, отчество работника станции, устранявшего данную неисправность в автомобиле данного клиента, и время ее устранения" 
                     Margin="5 0 0 0"
                     Width="35"
                     x:Name="tlbtnEmployee"
@@ -99,7 +120,7 @@
                 <Image Source="Image/Employee.png" Width="30" Height="30"/>
             </Button>
 
-            <Button ToolTip="Неисправности" 
+            <Button ToolTip="Фамилия, имя, отчество клиентов, сдавших в ремонт автомобили с указанным типом неисправности" 
                     Margin="5 0 0 0"
                     Content="Неисправности"
                     Width="120"
@@ -107,7 +128,7 @@
                     Height="30"
                     Click="queryButton_click"/>
 
-            <Button ToolTip="Распространенная" 
+            <Button ToolTip="Самая распространенная неисправность в автомобилях указанной марки" 
                     Margin="5 0 0 0"
                     Content="Распространенная"
                     Width="145"
@@ -115,7 +136,7 @@
                     Height="30"
                     Click="queryButton_click"/>
 
-            <Button ToolTip="Количество работников" 
+            <Button ToolTip="Количество рабочих каждой специальности на станции" 
                     Margin="5 0 0 0"
                     Content="Кол-во работников"
                     Width="145"

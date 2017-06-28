@@ -260,6 +260,12 @@
     <Resource Include="Image\bid.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Image\bids.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\malf.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="Image\print.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
