@@ -69,8 +69,10 @@ namespace Maintenance_RolicGoronok
 
         private void queryButton_click(object sender, RoutedEventArgs e)
         {
-            // Получаем контент нажатой кнопки
+            // Получаем имя нажатой кнопки
             string buttonName = ((Button)sender).Name.ToString();
+          
+
 
             // Количество вкладок с именем name
             int count = _tabItems.Where(t => buttonName.Contains(t.Name)).Count();
@@ -92,10 +94,10 @@ namespace Maintenance_RolicGoronok
                 case "tlbtnEmployee": frame.NavigationService.Navigate(new Uri("Pages/FourthQuery.xaml", UriKind.Relative)); break;
                 case "tlbtnBreakages": frame.NavigationService.Navigate(new Uri("Pages/FifthPage.xaml", UriKind.Relative)); break;
                 case "tlbtnCommon": frame.NavigationService.Navigate(new Uri("Pages/SixthPage.xaml", UriKind.Relative)); break;
-                case "tlbtnBids": frame.NavigationService.Navigate(new Uri("AllBid.xaml", UriKind.Relative)); break;
+                case "tlbtnBids": frame.NavigationService.Navigate(new Uri("Pages/AllBid.xaml", UriKind.Relative)); break;
                 case "tlbtnWorkersAmount": frame.NavigationService.Navigate(new Uri("Pages/SeventhPage.xaml", UriKind.Relative)); break;
+                case "tlbtnArchiveBids": frame.NavigationService.Navigate(new Uri("Pages/ArchiveBid.xaml", UriKind.Relative)); break;
             }
-
             tabDynamic.DataContext = null;
             tabItem.Content = frame;                         // установка содержимого вкладки
             count = _tabItems.Count;
@@ -108,6 +110,9 @@ namespace Maintenance_RolicGoronok
         // Создаем вкладку
         private TabItem CreateTabItem(string name)
         {
+
+            if (name == "Кол-во работников") name = "Работников";
+
             // создать TabItem
             TabItem tabItem = new TabItem();
             tabItem.Header = string.Format(name);

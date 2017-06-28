@@ -1,0 +1,49 @@
+﻿<Page x:Class="Maintenance_RolicGoronok.AllBid"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Maintenance_RolicGoronok"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="1000"
+      Title="AllBid">
+
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="570"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <ListView x:Name="lvAppeal" Style="{DynamicResource listView}" SelectionChanged="lvAppeal_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Заявка" Width="90" DisplayMemberBinding="{Binding Номер}" />
+                    <GridViewColumn Header="Клиент" Width="120" DisplayMemberBinding="{Binding Клиент}" />
+                    <GridViewColumn Header="Модель" Width="120" DisplayMemberBinding="{Binding Модель}" />
+                    <GridViewColumn Header="Номер" Width="120" DisplayMemberBinding="{Binding ГосНомер}" />
+                    <GridViewColumn Header="Дата" Width="100" DisplayMemberBinding="{Binding Дата}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <DataGrid x:Name="dg" Style="{DynamicResource DataGridStyle}" Grid.Column="1" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Неисправность" Binding="{Binding Path=Name}"/>
+                <DataGridTextColumn Header="Услуга" Binding="{Binding Path=service}"/>
+                <DataGridTextColumn Header="Цена" Binding="{Binding Path=Price}"/>
+                <DataGridTextColumn Header="Работник" Binding="{Binding Path=Surname}"/>
+                <DataGridTextColumn Header="Дата" Binding="{Binding Path=FinishDate}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+
+        <Button Grid.Row="1" x:Name="btCalculation" Content="Расчет" Click="btCalculation_Click"  Style="{DynamicResource Button}"/>
+
+        <Button Grid.Row="1" Grid.Column="1"  x:Name="btToArchive" Content="Заявку в архив" Click="btToArchive_Click"  Style="{DynamicResource Button}"/>
+    </Grid>
+</Page>

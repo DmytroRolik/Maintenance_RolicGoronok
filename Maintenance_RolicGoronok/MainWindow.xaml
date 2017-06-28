@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Maintenance_RolicGoronok"
         mc:Ignorable="d"
-        Title="Техобслуживание" Height="350" Width="1200" Style="{DynamicResource window}">
+        Title="Техобслуживание" Height="350" Width="1500" Style="{DynamicResource window}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -31,18 +31,21 @@
 
             <Button x:Name="tlbtnOwner" 
                     ToolTip="Фамилия, имя, отчество и адрес владельца автомобиля с данным номером государственной регистрации" 
-                    Content="Владелец"
-                    Width="100"
+                    Width="35"
                     Height="30"
-                    Click="queryButton_click"/>
+                    Click="queryButton_click">
+
+                <Image Source="Image/owner.png" Width="30" Height="30"/>
+            </Button>
 
             <Button ToolTip="Марка и год выпуска автомобиля данного владельца" 
                     Margin="5 0 0 0" 
-                    Content="Автомобиль" 
-                    Width="100" 
+                    Width="35" 
                     x:Name="tlbtnCar"  
                     Height="30" 
-                    Click="queryButton_click"/>
+                    Click="queryButton_click">
+                <Image Source="Image/car.png" Width="30" Height="30"/>
+            </Button>
 
             <Button ToolTip="Заявка" 
                     Margin="5 0 0 0" 
@@ -70,11 +73,13 @@
 
             <Button ToolTip="Рабочий" 
                     Margin="5 0 0 0"
-                    Content="Рабочий"
-                    Width="120"
+                    Width="35"
                     x:Name="tlbtnEmployee"
                     Height="30"
-                    Click="queryButton_click"/>
+                    Click="queryButton_click">
+
+                <Image Source="Image/Employee.png" Width="30" Height="30"/>
+            </Button>
 
             <Button ToolTip="Неисправности" 
                     Margin="5 0 0 0"
@@ -96,9 +101,18 @@
                     Margin="5 0 0 0"
                     Content="Кол-во работников"
                     Width="145"
-                    Tag="КоличествоРаботников"
+                    Tag="Количество Работников"
                     x:Name="tlbtnWorkersAmount"
                     Height="30"
+                    Click="queryButton_click"/>
+
+
+            <Button ToolTip="Архив заявок" 
+                    Margin="5 0 0 0" 
+                    Content="Архив" 
+                    Width="145" 
+                    x:Name="tlbtnArchiveBids" 
+                    Height="30" 
                     Click="queryButton_click"/>
         </ToolBar>
 
