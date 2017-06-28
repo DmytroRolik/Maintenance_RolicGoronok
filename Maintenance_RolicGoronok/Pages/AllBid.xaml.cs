@@ -32,7 +32,7 @@ namespace Maintenance_RolicGoronok
         //При загрузке
         private void AllBid_Loaded(object sender, RoutedEventArgs e)
         {
-            lvAppeal.ItemsSource = dc.Bids.Where(b=> b.Finish == false).Select(b => new {Номер= b.Id, Клиент = b.Appeal.Client.Surname, Модель = b.Appeal.Car.Model.Name, ГосНомер = b.Appeal.Car.Number, Дата = b.Appeal.dateAppeal.Day+"-"+b.Appeal.dateAppeal.Month+"-"+b.Appeal.dateAppeal.Year });
+            lvAppeal.ItemsSource = dc.Bids.Where(b=> b.Finish == false).Select(b => new {Номер= b.Id, Клиент = b.Appeal.Client.Surname, Модель = b.Appeal.Car.Model.Name, ГосНомер = b.Appeal.Car.Number, Дата = b.Appeal.dateAppeal.ToShortDateString() });
         }//AllBid_Loaded
 
         // При выборе в listView
@@ -40,7 +40,7 @@ namespace Maintenance_RolicGoronok
         {
             GetIdBid();
 
-            dg.ItemsSource = dc.Works.Where(w => w.BidId == id).Select(w => new { w.Attire.Malfunction.Name, service = w.Attire.ServicesInfo.Name, w.Attire.ServicesInfo.Price, w.Attire.Employee.Surname, w.Bid.FinishDate });
+            dg.ItemsSource = dc.Works.Where(w => w.BidId == id).Select(w => new { w.Attire.Malfunction.Name, service = w.Attire.ServicesInfo.Name, w.Attire.ServicesInfo.Price, w.Attire.Employee.Surname, w.Bid.FinishDate.Day });
         }//lvAppeal_SelectionChanged
 
 
@@ -58,7 +58,7 @@ namespace Maintenance_RolicGoronok
 
             lvAppeal.SelectionChanged -= lvAppeal_SelectionChanged;     // Отписываемся от события SelectionChanged
 
-            lvAppeal.ItemsSource = dc.Bids.Where(b => b.Finish == false).Select(b => new { Номер = b.Id, Клиент = b.Appeal.Client.Surname, Модель = b.Appeal.Car.Model.Name, ГосНомер = b.Appeal.Car.Number, Дата = b.Appeal.dateAppeal.Day + "-" + b.Appeal.dateAppeal.Month + "-" + b.Appeal.dateAppeal.Year });
+            lvAppeal.ItemsSource = dc.Bids.Where(b => b.Finish == false).Select(b => new { Номер = b.Id, Клиент = b.Appeal.Client.Surname, Модель = b.Appeal.Car.Model.Name, ГосНомер = b.Appeal.Car.Number, Дата = b.Appeal.dateAppeal.ToShortDateString() });
 
             lvAppeal.SelectionChanged += lvAppeal_SelectionChanged;     // Подписываемся на события SelectionChanged
         }//btToArchive_Click

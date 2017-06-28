@@ -27,24 +27,33 @@ namespace Maintenance_RolicGoronok
             Loaded += SixthPage_Loaded;
         }
 
+        // При загрузке страницы
         private void SixthPage_Loaded(object sender, RoutedEventArgs e)
         {
             listMarka.ItemsSource = dc.Models.Select(m => m.Name);
-        }
+        }//SixthPage_Loaded
 
+        // Получаем имя марки из listView
         private void listMarka_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            dg.ItemsSource = dc.Works.Where(w => w.Bid.Appeal.Car.Model.Name == listMarka.SelectedItem.ToString()).
-                GroupBy(w => w.Attire.Malfunction.Name).Select(lg => new
-                {
-                    Неисправность = lg.Key,
-                    Количество = lg.Count()
-                });
-        }
+            Show(listMarka.SelectedItem.ToString());
+        }//listMarka_SelectionChanged
 
+        //  Получаем имя марки из textBox
         private void do_Click(object sender, RoutedEventArgs e)
         {
+            Show(tbMarka.ToString());
+        }//do_Click
 
-        }
+        // Выводим информации в dataGrid
+        private void Show(string Model)
+        {
+            dg.ItemsSource = dc.Works.Where(w => w.Bid.Appeal.Car.Model.Name == Model).
+               GroupBy(w => w.Attire.Malfunction.Name).Select(lg => new
+               {
+                   Неисправность = lg.Key,
+                   Количество = lg.Count()
+               });
+        }//Show
     }
 }

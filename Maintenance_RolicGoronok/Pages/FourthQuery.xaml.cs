@@ -54,8 +54,11 @@ namespace Maintenance_RolicGoronok
             idBid = dc.Bids.Where(b => b.Appeal.CarId == idCar && b.Appeal.ClientId == idClient).Select(b => b.Id).ToList();
             dg.ItemsSource = dc.Works
                                     .Where(w => idBid.Contains(w.BidId) && w.Attire.Malfunction.Name == malfunction.SelectedItem.ToString())
-                                    .Select(w => new { Работник = w.Attire.Employee.Surname, Принято = w.Bid.Appeal.dateAppeal, Здано = w.Bid.FinishDate });
+                                    .Select(w => new { Работник = w.Attire.Employee.Surname, Принято = w.Bid.Appeal.dateAppeal.ToShortDateString(), Здано = w.Bid.FinishDate.ToShortDateString() });
         }//do_Click
+
+
+
 
 
     }

@@ -28,16 +28,26 @@ namespace Maintenance_RolicGoronok
             listOwner.ItemsSource = dc.Owners.OrderBy(o => o.Surname).Select(o=> o.Surname+" "+ o.Name[0]+"."+o.Patronymic[0]);
         }
 
+        // При нажатии кнопки Выполнить
         private void do_Click(object sender, RoutedEventArgs e)
         {
-            dg.ItemsSource = dc.Cars.Where(c => c.Owner.Surname == personSurname.Text).Select(a => new {Марка =  a.Model.Name,Год =  a.ProductionYear.Year });
-        }
+            Show(personSurname.Text);
+        }//do_Click
 
-       
+
 
         private void listOwner_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            dg.ItemsSource = dc.Cars.Where(c => c.Owner.Surname + " " + c.Owner.Name[0] + "." + c.Owner.Patronymic[0] == listOwner.SelectedItem.ToString()).Select(a => new { Марка = a.Model.Name, Год = a.ProductionYear.Year });
-        }
+            Show(listOwner.SelectedItem.ToString());
+        }//listOwner_SelectionChanged
+
+        // Выводим информации в dataGrid
+        private void Show(string Owner)
+        {
+            dg.ItemsSource = dc.Cars
+                .Where(c => c.Owner.Surname + " " + c.Owner.Name[0] + "." + c.Owner.Patronymic[0] == Owner)
+                .Select(a => new { Марка = a.Model.Name, Год = a.ProductionYear.Year });
+        }//Show
+
     }
 }

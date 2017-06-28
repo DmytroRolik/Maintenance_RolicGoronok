@@ -16,7 +16,7 @@
         </Grid.RowDefinitions>-->
 
         <DataGrid Name="dgvEmployees" AutoGenerateColumns="False"
-                  IsReadOnly="True">
+                  IsReadOnly="True" Style="{DynamicResource DataGridStyle}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Специальность" 
                                     Binding="{Binding Path=Name}"/>

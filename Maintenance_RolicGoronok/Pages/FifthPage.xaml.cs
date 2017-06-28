@@ -35,15 +35,25 @@ namespace Maintenance_RolicGoronok
         }
 
   
-
+        // При смене элемента в comboBox
         private void malfunction_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            dg.ItemsSource = dc.Works.Where(w => w.Attire.Malfunction.Name == malfunction.SelectedItem.ToString()).Select(w => new { Фамилия = w.Bid.Appeal.Client.Surname, Имя = w.Bid.Appeal.Client.Name, Отчество = w.Bid.Appeal.Client.Patronymic });
+            Show(malfunction.SelectedItem.ToString());
         }
 
+        // При смене элемента в listMalfunction
         private void listMalfunction_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            dg.ItemsSource = dc.Works.Where(w => w.Attire.Malfunction.Name == listMalfunction.SelectedItem.ToString()).Select(w => new { Фамилия = w.Bid.Appeal.Client.Surname, Имя = w.Bid.Appeal.Client.Name, Отчество = w.Bid.Appeal.Client.Patronymic, Дата = w.Bid.Appeal.dateAppeal });
+            Show(listMalfunction.SelectedItem.ToString());
         }
+
+
+        // Выводим информации в dataGrid
+        private void Show(string Malfunction)
+        {
+            dg.ItemsSource = dc.Works
+                .Where(w => w.Attire.Malfunction.Name == Malfunction)
+                .Select(w => new { Фамилия = w.Bid.Appeal.Client.Surname, Имя = w.Bid.Appeal.Client.Name, Отчество = w.Bid.Appeal.Client.Patronymic, Дата = w.Bid.Appeal.dateAppeal });
+        }//Show
     }
 }
