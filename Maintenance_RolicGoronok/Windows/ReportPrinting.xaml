@@ -32,7 +32,7 @@
 
                 <Table CellSpacing="0">
                     <Table.Columns>
-                        <TableColumn Width="5*"/>
+                        <TableColumn Width="4.5*"/>
                         <TableColumn Width="*"/>
                         <TableColumn Width="*"/>
                     </Table.Columns>
@@ -40,13 +40,22 @@
                     <TableRowGroup Name="tableRows">
                         <TableRow>
                             <TableCell BorderBrush="Black" BorderThickness="1">
-                                <Paragraph>Неисправность</Paragraph>
+                                <Paragraph TextAlignment="Center"
+                                           FontWeight="Bold">
+                                    Неисправность
+                                </Paragraph>
                             </TableCell>
                             <TableCell BorderBrush="Black" BorderThickness="1">
-                                <Paragraph>Количество устраненных</Paragraph>
+                                <Paragraph TextAlignment="Center"
+                                           FontWeight="Bold">
+                                    Количество
+                                </Paragraph>
                             </TableCell>
                             <TableCell BorderBrush="Black" BorderThickness="1">
-                                <Paragraph>Доход</Paragraph>
+                                <Paragraph TextAlignment="Center"
+                                           FontWeight="Bold">
+                                    Доход
+                                </Paragraph>
                             </TableCell>
                         </TableRow>
                     </TableRowGroup>
