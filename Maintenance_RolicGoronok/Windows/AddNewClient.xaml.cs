@@ -53,7 +53,7 @@ namespace Maintenance_RolicGoronok
             return false;
         }//FieldsAreFilled
 
-        // Метод Parsing извлекаем данные из окна и возвращаем их в виде объкта Person
+        // Метод Parsing извлекаем данные из окна и возвращаем их в виде объкта Client
         private List<Client> Parsing()
         {
             var person = new Client();

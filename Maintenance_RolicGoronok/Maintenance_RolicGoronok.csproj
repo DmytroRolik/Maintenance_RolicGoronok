@@ -56,17 +56,33 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AddModel.xaml.cs">
+    <Compile Include="Check.xaml.cs">
+      <DependentUpon>Check.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Garbs.cs" />
+    <Compile Include="Pages\AllBid.xaml.cs">
+      <DependentUpon>AllBid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ArchiveBid.xaml.cs">
+      <DependentUpon>ArchiveBid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\AddEmployee.xaml.cs">
+      <DependentUpon>AddEmployee.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\AddModel.xaml.cs">
       <DependentUpon>AddModel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AddNewCar.xaml.cs">
+    <Compile Include="Windows\AddNewCar.xaml.cs">
       <DependentUpon>AddNewCar.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AddNewClient.xaml.cs">
+    <Compile Include="Windows\AddNewClient.xaml.cs">
       <DependentUpon>AddNewClient.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AddNewOwner.xaml.cs">
+    <Compile Include="Windows\AddNewOwner.xaml.cs">
       <DependentUpon>AddNewOwner.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\EditClient.xaml.cs">
+      <DependentUpon>EditClient.xaml</DependentUpon>
     </Compile>
     <Compile Include="Maintenance.cs">
       <DependentUpon>Maintenance.dbml</DependentUpon>
@@ -89,24 +105,44 @@
     <Compile Include="Pages\SecondQuery.xaml.cs">
       <DependentUpon>SecondQuery.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SixthPage.xaml.cs">
+    <Compile Include="Pages\SixthPage.xaml.cs">
       <DependentUpon>SixthPage.xaml</DependentUpon>
     </Compile>
-    <Page Include="AddModel.xaml">
+    <Page Include="Check.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\AllBid.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\ArchiveBid.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\AddEmployee.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\AddModel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AddNewCar.xaml">
+    <Page Include="Windows\AddNewCar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AddNewClient.xaml">
+    <Page Include="Windows\AddNewClient.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AddNewOwner.xaml">
+    <Page Include="Windows\AddNewOwner.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\EditClient.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\FifthPage.xaml">
       <SubType>Designer</SubType>
@@ -157,7 +193,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SixthPage.xaml">
+    <Page Include="Pages\SixthPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -201,10 +237,19 @@
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Image\add.png" />
+    <Resource Include="Image\close.gif" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Image\close.gif" />
+    <Resource Include="Image\owner.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\car.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\Employee.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\bid.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

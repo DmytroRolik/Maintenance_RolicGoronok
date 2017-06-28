@@ -12,7 +12,7 @@
         <SolidColorBrush x:Key="TextBoxInfo" Color="#52C0E5"/>
         <SolidColorBrush x:Key="ButtonColor" Color="#07191A"/>
         <SolidColorBrush x:Key="BW" Color="#526BE5"/>
-        
+
 
         <!--Window-->
         <Style TargetType="Window" x:Key="window">
@@ -114,7 +114,7 @@
         <Style TargetType="ListView" x:Key="listView">
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="VerticalAlignment" Value="Stretch"/>
-            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontSize" Value="14"/>
             <Setter Property="Background" Value="{StaticResource Background}"/>
             <Setter Property="FontStyle" Value="Oblique"/>
             <Setter Property="BorderThickness" Value="1"/>
@@ -135,7 +135,14 @@
         <Button x:Key="btCancel" x:Shared="false"   Margin="40 0 0 0" Content="Отмена" Style="{DynamicResource Button}" IsCancel="True"  />
 
         <!--DataGridColunms-->
-        <DataGridCheckBoxColumn x:Key="select"  x:Shared="false"      Header="Выбор"       Width="80" />
+        <Style TargetType="DataGridColumnHeader" >
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="{DynamicResource TextBoxHeaderColor}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="White"/>
+            <Setter Property="BorderThickness" Value="1"/>
+
+        </Style>
 
     </Application.Resources>
 </Application>

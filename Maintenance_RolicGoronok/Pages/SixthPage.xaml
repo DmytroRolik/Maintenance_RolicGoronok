@@ -17,7 +17,7 @@
 
         <StackPanel Orientation="Horizontal">
             <Label Content="Введите марку: " FontSize="18" Width="150"/>
-            <TextBox x:Name="marka" FontSize="18" Width="150" Height="30"/>
+            <TextBox x:Name="tbMarka" FontSize="18" Width="150" Height="30"/>
             <Button x:Name="do" Margin="10 0 0 0" Content="Выполнить" Style="{DynamicResource Button}"  Click="do_Click"/>
         </StackPanel>
 
@@ -30,6 +30,8 @@
 
             <ListView Style="{DynamicResource listView}" Name="listMarka" SelectionChanged="listMarka_SelectionChanged"/>
             <DataGrid x:Name="dg" Grid.Column="2" Style="{DynamicResource DataGridStyle}" />
+
+
 
         </Grid>
 

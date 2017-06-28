@@ -31,24 +31,25 @@ namespace Maintenance_RolicGoronok
         // При нажатии на кнопку выполнить выводим в dataGrid Фамилия, имя, отчество и адрес владельца автомобиля с данным  номером государственной регистрации
         private void do_Click(object sender, RoutedEventArgs e)
         {
-
-            dg.ItemsSource = dc.Cars.Where(c => c.Number == numberRegistration.Text).Select(c => new {
-                Фамилия = c.Owner.Surname,
-                Имя = c.Owner.Name,
-                Отчество = c.Owner.Patronymic,
-                Адрес = c.Owner.Address
-            });
+            Show(numberRegistration.Text);
         }
 
         // При выборе в listView
         private void listNumber_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            dg.ItemsSource = dc.Cars.Where(c => c.Number == listNumber.SelectedItem.ToString()).Select(c => new {
+            Show(listNumber.SelectedItem.ToString());
+        }
+
+
+        // Выводим информации в dataGrid
+        private void Show(string Number)
+        {
+            dg.ItemsSource = dc.Cars.Where(c => c.Number == Number).Select(c => new {
                 Фамилия = c.Owner.Surname,
                 Имя = c.Owner.Name,
                 Отчество = c.Owner.Patronymic,
                 Адрес = c.Owner.Address
             });
-        }
+        }//Show
     }
 }

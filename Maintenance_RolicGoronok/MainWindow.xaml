@@ -5,53 +5,135 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Maintenance_RolicGoronok"
         mc:Ignorable="d"
-        Title="Техобслуживание" Height="350" Width="1030" Style="{DynamicResource window}">
+        Title="Техобслуживание" Height="350" Width="1500" Style="{DynamicResource window}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="35"/>
             <RowDefinition />
         </Grid.RowDefinitions>
-        
+
         <!--Меню-->
         <Menu Grid.Row="0" Style="{DynamicResource Menu}">
             <MenuItem Header="Файл">
                 <MenuItem Header="Выход" Name="exit"/>
             </MenuItem>
-            <MenuItem Header="Запросы" Margin="15 0 0 0">
+            <MenuItem Header="Диспетчер" Margin="15 0 0 0">
+                <MenuItem Header="Клиент" Name="editClient"/>
+                <MenuItem Header="Новый работник" Name="newEmp"/>
             </MenuItem>
 
+            <MenuItem Header="Запросы" Margin="15 0 0 0">
+                <MenuItem  Header="Владелец по номеру" Name="menOwner" Click="men_Click">
+                    <MenuItem.Icon>
+                        <Image Width="20" Height="20" Source="Image/owner.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <MenuItem  Header="Марка и год выпуска автомобиля данного владельца" Name="_tlbtnOwner" Click="queryButton_click">
+                    <MenuItem.Icon>
+                        <Image Width="20" Height="20" Source="Image/car.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                
+                
+            </MenuItem>
             <MenuItem Header="О программе" Margin="15 0 0 0" x:Name="About"/>
         </Menu>
 
 
         <ToolBar Grid.Row="1" >
-            <Button ToolTip="Фамилия, имя, отчество и адрес владельца автомобиля с данным номером государственной регистрации" 
-                       Content="Владелец" Width="100" Height="30" Tag="Владелец" Click="queryButton_click"/>
 
+            <Button x:Name="tlbtnOwner" 
+                    ToolTip="Фамилия, имя, отчество и адрес владельца автомобиля с данным номером государственной регистрации" 
+                    Width="35"
+                    Height="30"
+                    Click="queryButton_click">
+
+                <Image Source="Image/owner.png" Width="30" Height="30"/>
+            </Button>
 
             <Button ToolTip="Марка и год выпуска автомобиля данного владельца" 
-                    Margin="5 0 0 0" Content="Автомобиль" Width="100" Tag="Автомобиль" Height="30" Click="queryButton_click"/>
-            
+                    Margin="5 0 0 0" 
+                    Width="35" 
+                    x:Name="tlbtnCar"  
+                    Height="30" 
+                    Click="queryButton_click">
+                <Image Source="Image/car.png" Width="30" Height="30"/>
+            </Button>
+
             <Button ToolTip="Заявка" 
-                    Margin="5 0 0 0" Content="Заявка" Width="100" Tag="Заявка" Height="30" Click="queryButton_click"/>
-            
+                    Margin="5 0 0 0" 
+                  
+                    Width="35" 
+                    x:Name="tlbtnGarbs"  
+                    Height="30" 
+                    Click="queryButton_click">
+
+                <Image Source="Image/bid.png" Height="30" Width="30"/>
+            </Button>
+
+            <Button ToolTip="Заявки" 
+                    Margin="5 0 0 0" 
+                    Content="Все заявки" 
+                    Width="100"
+                    x:Name="tlbtnBids"
+                    Height="30"
+                    Click="queryButton_click"/>
+
             <Button ToolTip="Неисправность" 
-                    Margin="5 0 0 0" Content="Неисправность" Width="120" Tag="Неисправность" Height="30" Click="queryButton_click"/>
-            
+                    Margin="5 0 0 0"
+                    Content="Неисправность"
+                    Width="120"
+                    x:Name="tlbtnMalfunction"
+                    Height="30"
+                    Click="queryButton_click"/>
+
             <Button ToolTip="Рабочий" 
-                    Margin="5 0 0 0" Content="Рабочий" Width="120" Tag="Рабочий" Height="30" Click="queryButton_click"/>
-            
+                    Margin="5 0 0 0"
+                    Width="35"
+                    x:Name="tlbtnEmployee"
+                    Height="30"
+                    Click="queryButton_click">
+
+                <Image Source="Image/Employee.png" Width="30" Height="30"/>
+            </Button>
+
             <Button ToolTip="Неисправности" 
-                    Margin="5 0 0 0" Content="Неисправности" Width="120" Tag="Неисправности" Height="30" Click="queryButton_click"/>
+                    Margin="5 0 0 0"
+                    Content="Неисправности"
+                    Width="120"
+                    x:Name="tlbtnBreakages"
+                    Height="30"
+                    Click="queryButton_click"/>
 
             <Button ToolTip="Распространенная" 
-                    Margin="5 0 0 0" Content="Распространенная" Width="145" Tag="Распространенная" Height="30" Click="queryButton_click"/>
+                    Margin="5 0 0 0"
+                    Content="Распространенная"
+                    Width="145"
+                    x:Name="tlbtnCommon"
+                    Height="30"
+                    Click="queryButton_click"/>
 
-            <Button ToolTip="Кол-во работников" 
-                    Margin="5 0 0 0" Content="Кол-во работников" Width="145" Tag="КоличествоРаботников" Height="30" Click="queryButton_click"/>
+            <Button ToolTip="Количество работников" 
+                    Margin="5 0 0 0"
+                    Content="Кол-во работников"
+                    Width="145"
+                    Tag="Количество Работников"
+                    x:Name="tlbtnWorkersAmount"
+                    Height="30"
+                    Click="queryButton_click"/>
+
+
+            <Button ToolTip="Архив заявок" 
+                    Margin="5 0 0 0" 
+                    Content="Архив" 
+                    Width="145" 
+                    x:Name="tlbtnArchiveBids" 
+                    Height="30" 
+                    Click="queryButton_click"/>
         </ToolBar>
-        
+
 
         <TabControl Name="tabDynamic" ItemsSource="{Binding}"  Grid.Row="2" >
             <TabControl.Resources>
@@ -70,7 +152,6 @@
                 </DataTemplate>
             </TabControl.Resources>
         </TabControl>
-
 
     </Grid>
 </Window>

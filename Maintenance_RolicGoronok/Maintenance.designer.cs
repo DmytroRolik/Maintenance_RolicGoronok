@@ -1556,6 +1556,10 @@ namespace Maintenance_RolicGoronok
 		
 		private string _Passport;
 		
+		private string _License;
+		
+		private string _Phone;
+		
 		private EntitySet<Appeal> _Appeals;
 		
     #region Extensibility Method Definitions
@@ -1576,6 +1580,10 @@ namespace Maintenance_RolicGoronok
     partial void OnAddressChanged();
     partial void OnPassportChanging(string value);
     partial void OnPassportChanged();
+    partial void OnLicenseChanging(string value);
+    partial void OnLicenseChanged();
+    partial void OnPhoneChanging(string value);
+    partial void OnPhoneChanged();
     #endregion
 		
 		public Client()
@@ -1720,6 +1728,46 @@ namespace Maintenance_RolicGoronok
 					this._Passport = value;
 					this.SendPropertyChanged("Passport");
 					this.OnPassportChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_License", DbType="NVarChar(15) NOT NULL", CanBeNull=false)]
+		public string License
+		{
+			get
+			{
+				return this._License;
+			}
+			set
+			{
+				if ((this._License != value))
+				{
+					this.OnLicenseChanging(value);
+					this.SendPropertyChanging();
+					this._License = value;
+					this.SendPropertyChanged("License");
+					this.OnLicenseChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Phone", DbType="NVarChar(15)")]
+		public string Phone
+		{
+			get
+			{
+				return this._Phone;
+			}
+			set
+			{
+				if ((this._Phone != value))
+				{
+					this.OnPhoneChanging(value);
+					this.SendPropertyChanging();
+					this._Phone = value;
+					this.SendPropertyChanged("Phone");
+					this.OnPhoneChanged();
 				}
 			}
 		}

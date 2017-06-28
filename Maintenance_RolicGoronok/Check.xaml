@@ -1,12 +1,16 @@
-﻿<Window x:Class="Maintenance_RolicGoronok.AddNewOwner"
+﻿<Window x:Class="Maintenance_RolicGoronok.Check"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Maintenance_RolicGoronok"
         mc:Ignorable="d"
-        Title="AddNewOwner" Height="300" Width="300">
+        Title="Check" Height="300" Width="500" WindowStartupLocation="CenterScreen">
     <Grid>
-        
+        <TextBlock TextAlignment="Center">  <Run  FontSize="22"  >Чек</Run></TextBlock>
+        <TextBlock x:Name="service" Margin="0 45 0 0" TextAlignment="Justify"/>
+
+
+
     </Grid>
 </Window>

@@ -28,15 +28,24 @@ namespace Maintenance_RolicGoronok
             listOwner.ItemsSource = dc.Owners.OrderBy(o => o.Surname).Select(o => o.Surname + " " + o.Name[0] + "." + o.Patronymic[0]);
         }
 
+        // При нажатии кнопки выполнить
         private void do_Click(object sender, RoutedEventArgs e)
         {
-            dg.ItemsSource = dc.Works.Where(w => w.Bid.Appeal.Car.Owner.Surname == personSurname.Text).Select(w => new { Дата = w.Bid.FinishDate, Неисправность = w.Attire.Malfunction.Name });
+            Show(personSurname.Text);
         }
 
+        // Получаем Ф.И.О владельца из listView
         private void listOwner_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            dg.ItemsSource = dc.Works.Where(w => w.Bid.Appeal.Car.Owner.Surname+" "+ w.Bid.Appeal.Car.Owner.Name[0]+"."+w.Bid.Appeal.Car.Owner.Patronymic[0] == listOwner.SelectedItem.ToString())
-                .Select(w => new { Дата = w.Bid.FinishDate, Неисправность = w.Attire.Malfunction.Name });
+            Show(listOwner.SelectedItem.ToString());
         }
+
+        // Выводим информации в dataGrid
+        private void Show(string Owner)
+        {
+            dg.ItemsSource = dc.Works
+                .Where(w => w.Bid.Appeal.Car.Owner.Surname+" "+ w.Bid.Appeal.Car.Owner.Name[0]+"."+ w.Bid.Appeal.Car.Owner.Patronymic[0] == Owner && w.Bid.Finish == true)
+                .Select(w => new { Дата = w.Bid.FinishDate.Date.ToShortDateString(), Неисправность = w.Attire.Malfunction.Name });
+        }//Show
     }
 }
