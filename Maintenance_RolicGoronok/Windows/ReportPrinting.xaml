@@ -1,0 +1,58 @@
+﻿<Window x:Class="Maintenance_RolicGoronok.Windows.ReportPrinting"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Maintenance_RolicGoronok.Windows"
+        mc:Ignorable="d"
+        Title="ReportPrinting" Height="480" Width="640">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <ToolBar Grid.Row="0">
+            <Button x:Name="tlbtnPrint" 
+                    ToolTip="Печать" 
+                    Width="35"
+                    Height="30"
+                    Click="tlbtnPrint_Click">
+                <Image Source="../Image/print.png"/>
+            </Button>
+        </ToolBar>
+
+        <FlowDocumentPageViewer Grid.Row="1" Name="fdsvMain">
+            <FlowDocument Name="fdReport">
+
+                <Paragraph TextAlignment="Center"
+                           Name="pHeader"
+                           FontWeight="Bold"
+                           FontSize="18"/>
+
+                <Table CellSpacing="0">
+                    <Table.Columns>
+                        <TableColumn Width="5*"/>
+                        <TableColumn Width="*"/>
+                        <TableColumn Width="*"/>
+                    </Table.Columns>
+
+                    <TableRowGroup Name="tableRows">
+                        <TableRow>
+                            <TableCell BorderBrush="Black" BorderThickness="1">
+                                <Paragraph>Неисправность</Paragraph>
+                            </TableCell>
+                            <TableCell BorderBrush="Black" BorderThickness="1">
+                                <Paragraph>Количество устраненных</Paragraph>
+                            </TableCell>
+                            <TableCell BorderBrush="Black" BorderThickness="1">
+                                <Paragraph>Доход</Paragraph>
+                            </TableCell>
+                        </TableRow>
+                    </TableRowGroup>
+                </Table>
+            </FlowDocument>
+        </FlowDocumentPageViewer>
+
+    </Grid>
+</Window>

@@ -38,6 +38,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -107,6 +108,9 @@
     </Compile>
     <Compile Include="Pages\SixthPage.xaml.cs">
       <DependentUpon>SixthPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ReportPrinting.xaml.cs">
+      <DependentUpon>ReportPrinting.xaml</DependentUpon>
     </Compile>
     <Page Include="Check.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -197,6 +201,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\ReportPrinting.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -250,6 +258,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Image\bid.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\print.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
