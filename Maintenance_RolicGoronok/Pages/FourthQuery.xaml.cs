@@ -31,6 +31,7 @@ namespace Maintenance_RolicGoronok
 
         void FourthQuery_Loaded(object sender, RoutedEventArgs e)
         {
+            info.Text = "Фамилия, имя, отчество работника станции, устранявшего данную неисправность в автомобиле данного клиента, и время ее устранения";
             client.ItemsSource = dc.Clients.Select(c => c.Surname + " " + c.Name[0] + "." + c.Patronymic[0]);
         }//FourthQuery_Loaded
 
