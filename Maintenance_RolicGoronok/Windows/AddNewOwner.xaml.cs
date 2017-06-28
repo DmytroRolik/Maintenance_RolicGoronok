@@ -45,7 +45,7 @@ namespace Maintenance_RolicGoronok
             }//try-catch
         }
 
-        // Метод Parsing извлекаем данные из окна и возвращаем их в виде объкта Doctor
+        // Метод Parsing извлекаем данные из окна и возвращаем их в виде объкта Owner
         private List<Owner> Parsing()
         {
             var owner = new Owner();

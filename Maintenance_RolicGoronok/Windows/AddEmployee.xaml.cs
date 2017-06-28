@@ -61,7 +61,7 @@ namespace Maintenance_RolicGoronok
             idspecialiti = dc.Specialities.Where(s => s.Name == speciality.SelectedItem.ToString()).Select(s => s.Id).Single();
         }
 
-        // Метод Parsing извлекаем данные из окна и возвращаем их в виде объкта Doctor
+        // Метод Parsing извлекаем данные из окна и возвращаем их в виде объкта Employee
         private List<Employee> Parsing()
         {
             int.TryParse(ex.Text, out experience);
