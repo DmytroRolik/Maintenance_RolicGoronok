@@ -56,22 +56,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AddEmployee.xaml.cs">
+    <Compile Include="Garbs.cs" />
+    <Compile Include="Windows\AddEmployee.xaml.cs">
       <DependentUpon>AddEmployee.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AddModel.xaml.cs">
+    <Compile Include="Windows\AddModel.xaml.cs">
       <DependentUpon>AddModel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AddNewCar.xaml.cs">
+    <Compile Include="Windows\AddNewCar.xaml.cs">
       <DependentUpon>AddNewCar.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AddNewClient.xaml.cs">
+    <Compile Include="Windows\AddNewClient.xaml.cs">
       <DependentUpon>AddNewClient.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AddNewOwner.xaml.cs">
+    <Compile Include="Windows\AddNewOwner.xaml.cs">
       <DependentUpon>AddNewOwner.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EditClient.xaml.cs">
+    <Compile Include="Windows\EditClient.xaml.cs">
       <DependentUpon>EditClient.xaml</DependentUpon>
     </Compile>
     <Compile Include="Maintenance.cs">
@@ -98,27 +99,27 @@
     <Compile Include="Pages\SixthPage.xaml.cs">
       <DependentUpon>SixthPage.xaml</DependentUpon>
     </Compile>
-    <Page Include="AddEmployee.xaml">
+    <Page Include="Windows\AddEmployee.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="AddModel.xaml">
+    <Page Include="Windows\AddModel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AddNewCar.xaml">
+    <Page Include="Windows\AddNewCar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AddNewClient.xaml">
+    <Page Include="Windows\AddNewClient.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AddNewOwner.xaml">
+    <Page Include="Windows\AddNewOwner.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="EditClient.xaml">
+    <Page Include="Windows\EditClient.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -220,6 +221,7 @@
   <ItemGroup>
     <Resource Include="Image\close.gif" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

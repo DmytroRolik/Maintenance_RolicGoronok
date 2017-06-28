@@ -5,12 +5,13 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Maintenance_RolicGoronok"
       mc:Ignorable="d" 
-      d:DesignHeight="600" d:DesignWidth="1200"
+      d:DesignHeight="600" d:DesignWidth="1400"
       Title="Bid" Background="{DynamicResource BW}">
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="690" />
+            <ColumnDefinition Width="530" />
+            <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
@@ -18,6 +19,7 @@
             <RowDefinition Height="120"/>
             <RowDefinition/>
             <RowDefinition Height="50"/>
+            <RowDefinition Height="250"/>
         </Grid.RowDefinitions>
 
         <!--Grid Клиента-->
@@ -53,9 +55,9 @@
 
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="170" />
-                    <ColumnDefinition Width="150"/>
-                    <ColumnDefinition Width="90"/>
+                    <ColumnDefinition Width="180"/>
+                    <ColumnDefinition Width="140"/>
+                    <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
                 <Label Style="{DynamicResource LabelSecond}" Foreground="White" Content="Авто (по номеру)" FontWeight="ExtraBold" FontSize="18" Grid.Row="1"/>
                 <ComboBox x:Name="avto" Height="25" Width="150" FontSize="15" Grid.Column="1" Grid.Row="1" SelectionChanged="avto_SelectionChanged"/>
@@ -67,32 +69,74 @@
             </GroupBox>
         </Grid>
 
-        <!--DataGrid Неисправности (возникли проблемы с скролом datagrid из-за checkbox по этому обвернули внешним ScrollViewer)-->
-        <ScrollViewer VerticalScrollBarVisibility="Visible" Grid.Row="1">
-            <DataGrid Height="auto" Width="auto" Style="{DynamicResource DataGridStyle}" Grid.Row="1" RowEditEnding="dgMalfun_RowEditEnding" x:Name="dgMalfun">
-                <DataGrid.Columns>
-                    <DataGridCheckBoxColumn x:Name="selectMalfun"  Header="Выбор"       Width="80"/>
-                </DataGrid.Columns>
-            </DataGrid>
-        </ScrollViewer>
 
-        <!--DataGrid Работники (возникли проблемы с скролом datagrid из-за checkbox по этому обвернули внешним ScrollViewer)-->
-        <ScrollViewer VerticalScrollBarVisibility="Visible" Grid.Row="1" Grid.Column="1">
-            <DataGrid Height="auto" Style="{DynamicResource DataGridStyle}" x:Name="dgEmp" RowEditEnding="dg_RowEditEnding" Grid.Column="1" Grid.Row="1">
-                <DataGrid.Columns>
-                    <DataGridCheckBoxColumn x:Name="selectEmp"  Header="Выбор"       Width="80"/>
-                </DataGrid.Columns>
-            </DataGrid>
-        </ScrollViewer>
-        
-        <StackPanel Orientation="Horizontal" Grid.Row="2">
-            <Label Style="{DynamicResource LabelSecond}"  Content="Поставлен на ремонт " FontSize="18" />
-            <DatePicker x:Name="dateFrom" Width="150" Height="25" />
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBox Style="{DynamicResource TextBoxHeader}" Text="Выберите неисправности"/>
+
+            <!--ListView Неисправности -->
+            <ListView Height="auto" Width="auto" Style="{DynamicResource listView}" Grid.Row="2"   x:Name="lvMalfun"/>
+        </Grid>
+
+
+
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBox Style="{DynamicResource TextBoxHeader}" Text="Выберите услуги"  />
+
+            <!--ListView Неисправности -->
+            <ListView Height="auto" Width="auto" Style="{DynamicResource listView}" Grid.Row="2"   x:Name="lvServices"/>
+        </Grid>
+
+
+        <Grid Grid.Row="1" Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBox Style="{DynamicResource TextBoxHeader}" Text="Выберите работника"  />
+
+            <!--ListView Неисправности -->
+            <ListView Height="auto" Width="auto" Style="{DynamicResource listView}" Grid.Row="2"   x:Name="lvEmpl"/>
+        </Grid>
+
+
+        <StackPanel Orientation="Vertical" Grid.Column="2">
+
+            <StackPanel Orientation="Horizontal" Margin="0 35 0 0"  >
+                <Label Style="{DynamicResource LabelSecond}" Foreground="Wheat"  Content="Поставлен на ремонт " FontSize="18" />
+                <DatePicker x:Name="dateFrom" Width="150" Height="25" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0 15 0 0" >
+                <Label Style="{DynamicResource LabelSecond}" Foreground="Wheat" Content="Дата возврата " FontSize="18" />
+                <DatePicker x:Name="dateTo" Width="150" Height="25" Margin="57 0 0 0" />
+            </StackPanel>
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1">
-            <Label Style="{DynamicResource LabelSecond}"  Content="Поставлен на ремонт " FontSize="18" />
-            <DatePicker x:Name="dateTo" Width="150" Height="25" />
+        <DataGrid Grid.Row="3" AutoGenerateColumns="False" Grid.Column="0" Grid.ColumnSpan="3" x:Name="dgattire" Style="{DynamicResource DataGridStyle}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Неисправность" Binding="{Binding Path=Malfun}" Width="550"/>
+                <DataGridTextColumn Header="Услуга" Binding="{Binding Path=Servec}" Width="420"/>
+                <DataGridTextColumn Header="Работник" Binding="{Binding Path=Employee}" Width="450"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+
+        <StackPanel Orientation="Horizontal"  Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3">
+            <Button x:Name="add" Margin="30 0 0 0" Content="Добавить наряд" Width="180" Style="{DynamicResource Button}" Click="add_Click"/>
+
+            <Button x:Name="addBids" Margin="900 0 0 0" Content="Добавить заявку" Width="180" Style="{DynamicResource Button}" Click="addBids_Click"/>
+
         </StackPanel>
     </Grid>
 </Page>
