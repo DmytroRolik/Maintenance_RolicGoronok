@@ -84,14 +84,12 @@ namespace Maintenance_RolicGoronok
             // Имеет ли указанная строка значение null, является ли она пустой строкой или строкой,
             // состоящей только из символов-разделителей.
 
-            if (string.IsNullOrWhiteSpace(name.Text)
-                || string.IsNullOrWhiteSpace(patronymic.Text)
-                || string.IsNullOrWhiteSpace(surname.Text)
-                || string.IsNullOrWhiteSpace(ex.Text) ) return true;
+            return string.IsNullOrWhiteSpace(name.Text)
+                    || string.IsNullOrWhiteSpace(patronymic.Text)
+                    || string.IsNullOrWhiteSpace(surname.Text)
+                    || string.IsNullOrWhiteSpace(ex.Text) || category.SelectedItem == null || speciality.SelectedItem == null;
 
-            if (category.SelectedItem == null || speciality.SelectedItem == null) return true;
-
-            return false;
+            
         }//FieldsAreFilled
 
     }

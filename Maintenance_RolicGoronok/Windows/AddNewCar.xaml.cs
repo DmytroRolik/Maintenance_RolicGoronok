@@ -83,13 +83,10 @@ namespace Maintenance_RolicGoronok
             // Имеет ли указанная строка значение null, является ли она пустой строкой или строкой,
             // состоящей только из символов-разделителей.
 
-            if (string.IsNullOrWhiteSpace(color.Text)
-                || string.IsNullOrWhiteSpace(number.Text)) return true;
+            return string.IsNullOrWhiteSpace(color.Text)
+                || string.IsNullOrWhiteSpace(number.Text) || model.SelectedItem == null || owner.SelectedItem == null|| 
+                date.SelectedDate == null;
 
-            if (model.SelectedItem == null || owner.SelectedItem == null) return true;
-            if (date.SelectedDate == null) return true;
-
-            return false;
         }//FieldsAreFilled
 
         // Получаем ид выбраной в comboBox модели

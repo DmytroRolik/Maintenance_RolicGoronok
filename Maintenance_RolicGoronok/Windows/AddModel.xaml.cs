@@ -66,9 +66,8 @@ namespace Maintenance_RolicGoronok
         // Метод проверяет все ли данные введены
         private bool FieldsAreFilled()
         {
-            if (string.IsNullOrWhiteSpace(model.Text)) return true;
+            return string.IsNullOrWhiteSpace(model.Text);
 
-            return false;
         }//FieldsAreFilled
     }
 }

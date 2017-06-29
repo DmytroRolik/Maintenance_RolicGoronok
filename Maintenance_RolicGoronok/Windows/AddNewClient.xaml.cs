@@ -41,16 +41,13 @@ namespace Maintenance_RolicGoronok
             // Имеет ли указанная строка значение null, является ли она пустой строкой или строкой,
             // состоящей только из символов-разделителей.
 
-            if (string.IsNullOrWhiteSpace(address.Text)
+            return string.IsNullOrWhiteSpace(address.Text)
                 || string.IsNullOrWhiteSpace(name.Text)
                 || string.IsNullOrWhiteSpace(patronymic.Text)
                 || string.IsNullOrWhiteSpace(surname.Text)
                 || string.IsNullOrWhiteSpace(passport.Text)
-                || string.IsNullOrWhiteSpace(licen.Text)) return true;
+                || string.IsNullOrWhiteSpace(licen.Text) || dob.SelectedDate == null;
 
-            if (dob.SelectedDate == null) return true;
-
-            return false;
         }//FieldsAreFilled
 
         // Метод Parsing извлекаем данные из окна и возвращаем их в виде объкта Client

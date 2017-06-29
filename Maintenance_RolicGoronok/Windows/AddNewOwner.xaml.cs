@@ -64,12 +64,10 @@ namespace Maintenance_RolicGoronok
             // Имеет ли указанная строка значение null, является ли она пустой строкой или строкой,
             // состоящей только из символов-разделителей.
 
-            if (string.IsNullOrWhiteSpace(surname.Text)
+            return string.IsNullOrWhiteSpace(surname.Text)
                 || string.IsNullOrWhiteSpace(name.Text)
                 || string.IsNullOrWhiteSpace(patronymic.Text)
-                || string.IsNullOrWhiteSpace(address.Text)) return true;
-
-            return false;
+                || string.IsNullOrWhiteSpace(address.Text);
         }//FieldsAreFilled
 
 
