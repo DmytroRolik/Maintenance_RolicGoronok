@@ -44,8 +44,6 @@
                 </MenuItem>
 
 
-
-
                 <MenuItem  Header="Работник, устранявшый данную неисправность в автомобиле данного клиента, и время ее устранения" Name="_tlbtnEmployee"  Click="queryButton_click">
                     <MenuItem.Icon>
                         <Image Width="20" Height="20" Source="Image/Employee.png" />
