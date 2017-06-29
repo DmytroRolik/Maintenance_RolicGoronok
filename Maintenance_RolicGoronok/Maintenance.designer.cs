@@ -1618,6 +1618,8 @@ namespace Maintenance_RolicGoronok
 		
 		private System.DateTime _FinishDate;
 		
+		private bool _IsFinished;
+		
 		private EntitySet<OrderServices> _OrderServices;
 		
 		private EntityRef<Cars> _Cars;
@@ -1638,6 +1640,8 @@ namespace Maintenance_RolicGoronok
     partial void OnBeginDateChanged();
     partial void OnFinishDateChanging(System.DateTime value);
     partial void OnFinishDateChanged();
+    partial void OnIsFinishedChanging(bool value);
+    partial void OnIsFinishedChanged();
     #endregion
 		
 		public Orders()
@@ -1752,6 +1756,26 @@ namespace Maintenance_RolicGoronok
 					this._FinishDate = value;
 					this.SendPropertyChanged("FinishDate");
 					this.OnFinishDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsFinished", DbType="Bit NOT NULL")]
+		public bool IsFinished
+		{
+			get
+			{
+				return this._IsFinished;
+			}
+			set
+			{
+				if ((this._IsFinished != value))
+				{
+					this.OnIsFinishedChanging(value);
+					this.SendPropertyChanging();
+					this._IsFinished = value;
+					this.SendPropertyChanged("IsFinished");
+					this.OnIsFinishedChanged();
 				}
 			}
 		}

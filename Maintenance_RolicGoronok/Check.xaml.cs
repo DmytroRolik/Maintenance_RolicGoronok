@@ -19,25 +19,27 @@ namespace Maintenance_RolicGoronok
     /// </summary>
     public partial class Check : Window
     {
-        public int idBid;
+        public Orders order;
         MaintenanceDataContext dc = new MaintenanceDataContext();
         public Check()
         {
             InitializeComponent();
         }
 
-        public Check(int id)
+        public Check(Orders order)
         {
             InitializeComponent();
-            idBid = id;
+            this.order = order;
 
             Loaded += Check_Loaded;
         }
 
         private void Check_Loaded(object sender, RoutedEventArgs e)
         {
-            List<string> temp  = dc.Works.Where(w => w.BidId == idBid).Select(w=> w.Attire.ServicesInfo.Name).ToList();
-            int cost = dc.Works.Where(w => w.BidId == idBid).Sum(w=>w.Attire.ServicesInfo.Price);
+            List<string> temp  = dc.OrderServices.Where(os => os.Orders == order)
+                                                 .Select(os => os.ServicesInfos.Name)
+                                                 .ToList();
+            int cost = dc.OrderServices.Sum(os => os.ServicesInfos.Price);
 
             foreach (var item in temp) service.Text += item + "\n";
 

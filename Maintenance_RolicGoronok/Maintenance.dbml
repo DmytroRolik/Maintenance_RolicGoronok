@@ -75,6 +75,7 @@
       <Column Name="CarId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="BeginDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
       <Column Name="FinishDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="IsFinished" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Association Name="Orders_OrderServices" Member="OrderServices" ThisKey="Id" OtherKey="OrderId" Type="OrderServices" />
       <Association Name="Cars_Orders" Member="Cars" ThisKey="CarId" OtherKey="Id" Type="Cars" IsForeignKey="true" />
       <Association Name="Persons_Orders" Member="Persons" ThisKey="ClientId" OtherKey="Id" Type="Persons" IsForeignKey="true" />

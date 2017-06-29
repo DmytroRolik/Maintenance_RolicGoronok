@@ -35,7 +35,7 @@ namespace Maintenance_RolicGoronok
         private void Bid_Loaded(object sender, RoutedEventArgs e)
         {
             // Загружаем в ComboBox client коллекцию клиентов
-            client.ItemsSource = dc.Clients.Select(p => new { Фамилия = p.Surname + " " + p.Name[0] + "." + p.Patronymic[0] }).Select(p => p.Фамилия);
+            client.ItemsSource = dc.Persons.Select(o => new { Фамилия = o.Surname + " " + o.Name[0] + "." + o.Patronymic[0] }).Select(p => p.Фамилия);
 
             // Загружаем в ComboBox avto коллекцию номеров машин
             avto.ItemsSource = dc.Cars.Select(c => c.Number);
@@ -44,10 +44,10 @@ namespace Maintenance_RolicGoronok
             lvMalfun.ItemsSource = dc.Malfunctions.OrderBy(m => m.Name).Select(m => m.Name);
 
             // Загружаем в ListView lvEmpl коллекцию работников
-            lvEmpl.ItemsSource = dc.Employees.Select(em => em.Surname + " " + em.Name[0] + "." + em.Patronymic[0]);
+            lvEmpl.ItemsSource = dc.Employees.Select(em => em.Persons.Surname + " " + em.Persons.Name[0] + "." + em.Persons.Patronymic[0]);
 
             // Загружаем в ListView lvServices коллекцию услуг
-            lvServices.ItemsSource = dc.ServicesInfos.OrderBy(s => s.Name).Select(s => s.Name);
+            lvServices.ItemsSource = dc.ServicesInfos.Select(s => s.Name);
         }//Bid_Loaded
 
         // При нажатии на кнопку новый клиент
@@ -56,7 +56,7 @@ namespace Maintenance_RolicGoronok
             // Открываем окно для создания клиента
             new AddNewClient().ShowDialog();
             // Обновляем в ComboBox client записи о клиентах
-            client.ItemsSource = dc.Clients.Select(p => new { Фамилия = p.Surname + " " + p.Name[0] + "." + p.Patronymic[0] }).OrderBy(p => p.Фамилия).Select(p => p.Фамилия);
+            client.ItemsSource = dc.Persons.Select(p => new { Фамилия = p.Surname + " " + p.Name[0] + "." + p.Patronymic[0] }).OrderBy(p => p.Фамилия).Select(p => p.Фамилия);
         }//addClient_Click
 
         // При нажатии на кнопку новый авто
@@ -71,24 +71,24 @@ namespace Maintenance_RolicGoronok
         // При выборе Номера автомобиля в comboBox avto выводим краткую информацию об авто
         private void avto_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            dgAvto.ItemsSource = dc.Cars.Where(c => c.Number == avto.SelectedItem.ToString()).Select(c => new { Модель = c.Model.Name, Цвет = c.Color, Владелец = c.Owner.Surname });
+            dgAvto.ItemsSource = dc.Cars.Where(c => c.Number == avto.SelectedItem.ToString()).Select(c => new { Модель = c.Models.Name, Цвет = c.Color, Владелец = c.Persons.Surname });
         }//avto_SelectionChanged
 
 
         // При выборе Клиента в comboBox client  выводим краткую информацию о клиенте
         private void client_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            dgClient.ItemsSource = dc.Clients.Where(p => p.Surname + " " + p.Name[0] + "." + p.Patronymic[0] == client.SelectedItem.ToString()).Select(p => new { Паспорт = p.Passport, Рожден = p.BirthDate.Day + "." + p.BirthDate.Month + "." + p.BirthDate.Year });
+            dgClient.ItemsSource = dc.Persons.Where(p => p.Surname + " " + p.Name[0] + "." + p.Patronymic[0] == client.SelectedItem.ToString()).Select(p => new { Паспорт = p.Passport, Рожден = p.BirthDate.ToShortDateString() });
         }//client_SelectionChanged
 
 
         // Собираем данные о наряде в коллекцию
         private void add_Click(object sender, RoutedEventArgs e)
         {
-            if (FieldsAreFilledForAttire()) { MessageBox.Show("Не все данные о наряде выбраны"); return; }
+            if (FieldsAreFilledForAttire()) { MessageBox.Show("Не все данные выбраны"); return; }
             // Получаем Ид Неисправности, Ид Работника, Ид Услуги
             int MalfunId = dc.Malfunctions.Where(m => m.Name == lvMalfun.SelectedItem.ToString()).Select(m => m.Id).Single();
-            int EmployeeId = dc.Employees.Where(em => em.Surname + " " + em.Name[0] + "." + em.Patronymic[0] == lvEmpl.SelectedItem.ToString()).Select(em => em.Id).Single();
+            int EmployeeId = dc.Employees.Where(em => em.Persons.Surname + " " + em.Persons.Name[0] + "." + em.Persons.Patronymic[0] == lvEmpl.SelectedItem.ToString()).Select(em => em.Id).Single();
             int ServecId = dc.ServicesInfos.Where(s => s.Name == lvServices.SelectedItem.ToString()).Select(s => s.Id).Single();
 
             // Создаем объект наряд
@@ -206,25 +206,26 @@ namespace Maintenance_RolicGoronok
             catch (Exception f)
             {
                 MessageBox.Show(f.Message);
-                dc.SubmitChanges();
             }//try-catch
-        }
+        }// SubmitChanges
 
 
         // Метод проверяет все ли данные для наряда введены
-        private bool FieldsAreFilledForAttire()
+        private bool FieldsAreNotFilledForAttire()
         {
-            if (lvEmpl.SelectedItem == null || lvMalfun.SelectedItem == null || lvServices.SelectedItem == null) return true;
-            return false;
+            return lvEmpl.SelectedItem == null ||
+                   lvMalfun.SelectedItem == null ||
+                   lvServices.SelectedItem == null;
         }//FieldsAreFilled
 
         // Метод проверяет все ли данные для наряда введены
         private bool FieldsAreFilledForBid()
         {
-            if (listGarbs.Count == 0) return true;
-            if (client.SelectedItem == null || avto.SelectedItem == null) return true;
-            if (dateFrom.SelectedDate == null || dateTo.SelectedDate == null) return true;
-            return false;
+            return listGarbs.Count == 0 ||
+                   client.SelectedItem == null ||
+                   avto.SelectedItem == null ||
+                   dateFrom.SelectedDate == null ||
+                   dateTo.SelectedDate == null;
         }//FieldsAreFilled
     }
 }

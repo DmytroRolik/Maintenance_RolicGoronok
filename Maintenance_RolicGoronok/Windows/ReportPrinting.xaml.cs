@@ -40,17 +40,24 @@ namespace Maintenance_RolicGoronok.Windows
             using (MaintenanceDataContext dc = new MaintenanceDataContext()) {
 
                 // добавить каждую неисправниость и информацию к ней
-                foreach (Malfunction m in dc.Malfunctions) {
+                foreach (Malfunctions m in dc.Malfunctions) {
                     tableRows.Rows.Add(GetRow(m));
                 }// foreach
             }// using
         }// InitTableRows
 
-        private TableRow GetRow(Malfunction m)
+        private TableRow GetRow(Malfunctions m)
         {
-            string name = m.Name;                                   // имя неисправности
-            int amount = m.Attires.Count;                           // кол-во обращений с данной неисправность
-            int income = m.Attires.Sum(a => a.ServicesInfo.Price);  // общая сумма дохода за устранение данной неисправности
+            string name;
+            int amount;
+            int income;
+
+            using (MaintenanceDataContext dc = new MaintenanceDataContext()) {
+                name = m.Name;                                                                 // имя неисправности
+                amount = dc.OrderServices.Count(os => os.CarMalfunctions.Malfunctions == m);   // кол-во обращений с данной неисправность
+                income = dc.OrderServices.Where(os => os.CarMalfunctions.Malfunctions == m)
+                           .Sum(os => os.ServicesInfos.Price);                                 // общая сумма дохода за устранение данной неисправности
+            }// using
 
             // создание контейнеров для помещения данных в строку таблицы (TableRow)
             Paragraph pName = new Paragraph();      // имя

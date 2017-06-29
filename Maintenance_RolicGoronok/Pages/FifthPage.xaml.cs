@@ -30,30 +30,30 @@ namespace Maintenance_RolicGoronok
 
         private void FifthPage_Loaded(object sender, RoutedEventArgs e)
         {
-           listMalfunction.ItemsSource = malfunction.ItemsSource = dc.Malfunctions.Select(m => m.Name);
+            listMalfunction.ItemsSource = malfunction.ItemsSource = dc.Malfunctions.Select(m => m.Name);
             malfunction.SelectedIndex = 0;
-        }
+        }// FifthPage_Loaded
 
-  
+
         // При смене элемента в comboBox
         private void malfunction_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Show(malfunction.SelectedItem.ToString());
+            Show(malfunction.SelectedItem as Malfunctions);
         }
 
         // При смене элемента в listMalfunction
         private void listMalfunction_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Show(listMalfunction.SelectedItem.ToString());
+            Show(listMalfunction.SelectedItem as Malfunctions);
         }
 
 
         // Выводим информации в dataGrid
-        private void Show(string Malfunction)
+        private void Show(Malfunctions malfunction)
         {
-            dg.ItemsSource = dc.Works
-                .Where(w => w.Attire.Malfunction.Name == Malfunction)
-                .Select(w => new { Фамилия = w.Bid.Appeal.Client.Surname, Имя = w.Bid.Appeal.Client.Name, Отчество = w.Bid.Appeal.Client.Patronymic, Дата = w.Bid.Appeal.dateAppeal });
+            dg.ItemsSource = dc.OrderServices
+                .Where(os => os.CarMalfunctions.Malfunctions == malfunction)
+                .Select(os => new { Фамилия = os.Orders.Persons.Surname, Имя = os.Orders.Persons.Name, Отчество = os.Orders.Persons.Patronymic, Дата = os.Orders.BeginDate.ToShortDateString() });
         }//Show
     }
 }

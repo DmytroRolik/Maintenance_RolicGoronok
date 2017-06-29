@@ -30,7 +30,7 @@ namespace Maintenance_RolicGoronok
         // При загрузке страницы
         private void SixthPage_Loaded(object sender, RoutedEventArgs e)
         {
-            listMarka.ItemsSource = dc.Models.Select(m => m.Name);
+            listMarka.ItemsSource = dc.Models;
         }//SixthPage_Loaded
 
         // Получаем имя марки из listView
@@ -48,12 +48,19 @@ namespace Maintenance_RolicGoronok
         // Выводим информации в dataGrid
         private void Show(string Model)
         {
-            dg.ItemsSource = dc.Works.Where(w => w.Bid.Appeal.Car.Model.Name == Model).
-               GroupBy(w => w.Attire.Malfunction.Name).Select(lg => new
-               {
-                   Неисправность = lg.Key,
-                   Количество = lg.Count()
-               });
+            //dg.ItemsSource = dc.Works.Where(w => w.Bid.Appeal.Car.Model.Name == Model).
+            //   GroupBy(w => w.Attire.Malfunction.Name).Select(lg => new
+            //   {
+            //       Неисправность = lg.Key,
+            //       Количество = lg.Count()
+            //   });
+            dg.ItemsSource = dc.CarMalfunctions.Where(cm => cm.Cars.Models == listMarka.SelectedItem as Models)
+                                               .GroupBy(cm => cm.Malfunctions)
+                                               .Select(res => new
+                                               {
+                                                   Неисправность = res.Key,
+                                                   Количество = res.Count()
+                                               });
         }//Show
     }
 }

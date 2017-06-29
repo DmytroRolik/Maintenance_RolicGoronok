@@ -67,6 +67,30 @@
     <Compile Include="Pages\ArchiveBid.xaml.cs">
       <DependentUpon>ArchiveBid.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\BidClient.xaml.cs">
+      <DependentUpon>BidClient.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\FifthPage.xaml.cs">
+      <DependentUpon>FifthPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\FirstQuery.xaml.cs">
+      <DependentUpon>FirstQuery.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\FourthQuery.xaml.cs">
+      <DependentUpon>FourthQuery.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\MalfunctionsPage.xaml.cs">
+      <DependentUpon>MalfunctionsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SecondQuery.xaml.cs">
+      <DependentUpon>SecondQuery.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SeventhPage.xaml.cs">
+      <DependentUpon>SeventhPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SixthPage.xaml.cs">
+      <DependentUpon>SixthPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\AddEmployee.xaml.cs">
       <DependentUpon>AddEmployee.xaml</DependentUpon>
     </Compile>
@@ -88,33 +112,12 @@
     <Compile Include="Maintenance.cs">
       <DependentUpon>Maintenance.dbml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\FifthPage.xaml.cs">
-      <DependentUpon>FifthPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\FourthQuery.xaml.cs">
-      <DependentUpon>FourthQuery.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\MalfunctionsPage.xaml.cs">
-      <DependentUpon>MalfunctionsPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\BidClient.xaml.cs">
-      <DependentUpon>BidClient.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\SeventhPage.xaml.cs">
-      <DependentUpon>SeventhPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\SecondQuery.xaml.cs">
-      <DependentUpon>SecondQuery.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\SixthPage.xaml.cs">
-      <DependentUpon>SixthPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Windows\ReportPrinting.xaml.cs">
       <DependentUpon>ReportPrinting.xaml</DependentUpon>
     </Compile>
     <Page Include="Check.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\AllBid.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -123,6 +126,38 @@
     <Page Include="Pages\ArchiveBid.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\BidClient.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\FifthPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\FirstQuery.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\FourthQuery.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\MalfunctionsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SecondQuery.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SeventhPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SixthPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\AddEmployee.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -148,26 +183,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\FifthPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\FourthQuery.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\MalfunctionsPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\BidClient.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\FirstQuery.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -177,9 +192,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CreateAndInsertTable.cs" />
-    <Compile Include="Pages\FirstQuery.xaml.cs">
-      <DependentUpon>FirstQuery.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Maintenance.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -189,18 +201,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Pages\SeventhPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\SecondQuery.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\SixthPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Windows\ReportPrinting.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
