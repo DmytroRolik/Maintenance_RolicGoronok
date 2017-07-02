@@ -31,11 +31,11 @@
         <DataGrid x:Name="dg" Style="{DynamicResource DataGridStyle}" Grid.Column="1" AutoGenerateColumns="False"
                   IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Неисправность" Binding="{Binding Path=CarMalfunctions.Malfunctions}"/>
-                <DataGridTextColumn Header="Услуга" Binding="{Binding Path=ServicesInfos}"/>
-                <DataGridTextColumn Header="Цена" Binding="{Binding Path=ServicesInfos.Price}"/>
-                <DataGridTextColumn Header="Работник" Binding="{Binding Path=Executors}"/> 
-                <DataGridTextColumn Header="Дата" Binding="{Binding Path=Orders.ShortFinishDate}"/>
+                <DataGridTextColumn Header="Неисправность" Binding="{Binding Path=OrderServices.CarMalfunctions.Malfunctions}"/>
+                <DataGridTextColumn Header="Услуга" Binding="{Binding Path=OrderServices.ServicesInfos}"/>
+                <DataGridTextColumn Header="Цена" Binding="{Binding Path=OrderServices.ServicesInfos.Price}"/>
+                <DataGridTextColumn Header="Работник" Binding="{Binding Path=Employees}"/>
+                <DataGridTextColumn Header="Дата" Binding="{Binding Path=OrderServices.Orders.ShortFinishDate}"/>
             </DataGrid.Columns>
         </DataGrid>
 

@@ -30,7 +30,7 @@ namespace Maintenance_RolicGoronok
 
         private void FifthPage_Loaded(object sender, RoutedEventArgs e)
         {
-            listMalfunction.ItemsSource = malfunction.ItemsSource = dc.Malfunctions.Select(m => m.Name);
+            listMalfunction.ItemsSource = malfunction.ItemsSource = dc.Malfunctions;
             malfunction.SelectedIndex = 0;
         }// FifthPage_Loaded
 

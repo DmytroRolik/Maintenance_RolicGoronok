@@ -38,7 +38,7 @@ namespace Maintenance_RolicGoronok
         // При выборе в listView
         private void lvAppeal_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            dg.ItemsSource = dc.OrderServices.Where(os => os.Orders == lvAppeal.SelectedItem as Orders);
+            dg.ItemsSource = dc.Executors.Where(ex => ex.OrderServices.Orders == lvAppeal.SelectedItem as Orders);
         }//lvAppeal_SelectionChanged
 
 

@@ -60,7 +60,6 @@
     <Compile Include="Check.xaml.cs">
       <DependentUpon>Check.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Garbs.cs" />
     <Compile Include="Pages\AllBid.xaml.cs">
       <DependentUpon>AllBid.xaml</DependentUpon>
     </Compile>
@@ -128,8 +127,8 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\BidClient.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\FifthPage.xaml">
       <SubType>Designer</SubType>
@@ -191,7 +190,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CreateAndInsertTable.cs" />
     <Compile Include="Maintenance.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
