@@ -21,6 +21,7 @@ namespace Maintenance_RolicGoronok.Windows
     {
         // дата начала выборки
         DateTime minDate = DateTime.Today.AddMonths(-1);
+        MaintenanceDataContext dc = new MaintenanceDataContext();
 
         public ReportPrinting()
         {
@@ -36,14 +37,10 @@ namespace Maintenance_RolicGoronok.Windows
         // добавляет строки к таблице
         private void InitTableRows()
         {
-            // создать датаконтекст для выполнения операций
-            using (MaintenanceDataContext dc = new MaintenanceDataContext()) {
-
-                // добавить каждую неисправниость и информацию к ней
-                foreach (Malfunctions m in dc.Malfunctions) {
-                    tableRows.Rows.Add(GetRow(m));
-                }// foreach
-            }// using
+            // добавить каждую неисправниость и информацию к ней
+            foreach (Malfunctions m in dc.Malfunctions) {
+                tableRows.Rows.Add(GetRow(m));
+            }// foreach
         }// InitTableRows
 
         private TableRow GetRow(Malfunctions m)
@@ -52,12 +49,13 @@ namespace Maintenance_RolicGoronok.Windows
             int amount;
             int income;
 
-            using (MaintenanceDataContext dc = new MaintenanceDataContext()) {
-                name = m.Name;                                                                 // имя неисправности
-                amount = dc.OrderServices.Count(os => os.CarMalfunctions.Malfunctions == m);   // кол-во обращений с данной неисправность
-                income = dc.OrderServices.Where(os => os.CarMalfunctions.Malfunctions == m)
-                           .Sum(os => os.ServicesInfos.Price);                                 // общая сумма дохода за устранение данной неисправности
-            }// using
+            name = m.Name;                                                                                                        // имя неисправности
+            amount = dc.OrderServices.Count(os => os.CarMalfunctions.Malfunctions == m && 
+                                                    (os.Orders.BeginDate >= minDate && os.Orders.BeginDate <= DateTime.Today));   // кол-во обращений с данной неисправность
+            income = amount == 0 ? 0 :
+                                   dc.OrderServices.Where(os => os.CarMalfunctions.Malfunctions == m &&
+                                                               (os.Orders.BeginDate >= minDate && os.Orders.BeginDate <= DateTime.Today))
+                                                   .Sum(os => os.ServicesInfos.Price);                                            // общая сумма дохода за устранение данной неисправности
 
             // создание контейнеров для помещения данных в строку таблицы (TableRow)
             Paragraph pName = new Paragraph();      // имя
@@ -113,7 +111,7 @@ namespace Maintenance_RolicGoronok.Windows
                 // Привести страницу FlowDocument в соответствие с печатной страницей
                 doc.PageHeight = pd.PrintableAreaHeight;
                 doc.PageWidth = pd.PrintableAreaWidth;
-                doc.PagePadding = new Thickness(24d);       // !!!важно!!! - задает отступ от границ страницы (по умолчанию А4)
+                doc.PagePadding = new Thickness(24d);       // !!!важно!!! - задает отступ от границ страницы (по умолчанию без отступа)
                 doc.ColumnGap = 25;
                 doc.ColumnWidth = (doc.PageWidth - doc.ColumnGap        // задает ширину печати 1 столбца (можно разбить на несколько)
                     - doc.PagePadding.Left - doc.PagePadding.Right);

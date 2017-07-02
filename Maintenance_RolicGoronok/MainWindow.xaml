@@ -19,8 +19,19 @@
                 <MenuItem Header="Выход" Name="exit"/>
             </MenuItem>
             <MenuItem Header="Диспетчер" Margin="15 0 0 0">
-                <MenuItem Header="Клиент" Name="editClient"/>
+                <MenuItem Header="Редактировать клиента" Name="editClient"/>
+                
+            </MenuItem>
+
+            <MenuItem Header="Добавить" Margin="15 0 0 0">
                 <MenuItem Header="Новый работник" Name="newEmp"/>
+                <MenuItem Header="Новую модель автомобиля" Name="newModel"/>
+                <MenuItem Header="Новый автомобиль" Name="newCar"/>
+                <MenuItem Header="Новый клиент" Name="newClient"/>
+            </MenuItem>
+
+            <MenuItem Header="Отчет" Margin="15 0 0 0">
+                <MenuItem Header="Неисправности за месяц" Name="printReport"/>
             </MenuItem>
 
             <MenuItem Header="Запросы" Margin="15 0 0 0">
