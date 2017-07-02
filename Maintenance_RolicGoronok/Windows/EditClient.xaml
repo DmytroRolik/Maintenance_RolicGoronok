@@ -48,7 +48,10 @@
             <TextBox  x:Name="passport" Style="{DynamicResource textBox}" Grid.Column="1" Grid.Row="1" Width="250"/>
             <TextBox  x:Name="licen" Style="{DynamicResource textBox}" Grid.Column="1" Grid.Row="2" Width="250"/>
             <TextBox  x:Name="address" Style="{DynamicResource textBox}" Grid.Column="1" Grid.Row="3" Width="250"/>
-            <TextBox  x:Name="phone" Style="{DynamicResource textBox}" Grid.Column="1" Grid.Row="4" Width="250"/>
+            <TextBox  x:Name="phone" Style="{DynamicResource textBox}" Grid.Column="1" Grid.Row="4" Width="250"
+                      IsReadOnly="True">
+                Функция временно недоступна
+            </TextBox>
             <Button x:Name="change" Content="Изменить" Style="{DynamicResource Button}" Grid.Row="5" Grid.ColumnSpan="2" Click="change_Click"/>
         </Grid>
         

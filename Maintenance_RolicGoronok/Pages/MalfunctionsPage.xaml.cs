@@ -25,27 +25,30 @@ namespace Maintenance_RolicGoronok
         {
             InitializeComponent();
             info.Text = "Перечень устраненных неисправностей в автомобиле данного владельца";
-            listOwner.ItemsSource = dc.Owners.OrderBy(o => o.Surname).Select(o => o.Surname + " " + o.Name[0] + "." + o.Patronymic[0]);
+            listOwner.ItemsSource = dc.Persons.OrderBy(o => o.Surname);
         }
 
         // При нажатии кнопки выполнить
         private void do_Click(object sender, RoutedEventArgs e)
         {
-            Show(personSurname.Text);
+            //Show(personSurname.Text);
         }
 
         // Получаем Ф.И.О владельца из listView
         private void listOwner_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Show(listOwner.SelectedItem.ToString());
+            Show(listOwner.SelectedItem as Persons);
         }
 
         // Выводим информации в dataGrid
-        private void Show(string Owner)
+        private void Show(Persons Owner)
         {
-            dg.ItemsSource = dc.Works
-                .Where(w => w.Bid.Appeal.Car.Owner.Surname+" "+ w.Bid.Appeal.Car.Owner.Name[0]+"."+ w.Bid.Appeal.Car.Owner.Patronymic[0] == Owner && w.Bid.Finish == true)
-                .Select(w => new { Дата = w.Bid.FinishDate.Date.ToShortDateString(), Неисправность = w.Attire.Malfunction.Name });
+            //dg.ItemsSource = dc.Works
+            //    .Where(w => w.Bid.Appeal.Car.Owner.Surname+" "+ w.Bid.Appeal.Car.Owner.Name[0]+"."+ w.Bid.Appeal.Car.Owner.Patronymic[0] == Owner && w.Bid.Finish == true)
+            //    .Select(w => new { Дата = w.Bid.FinishDate.Date.ToShortDateString(), Неисправность = w.Attire.Malfunction.Name });
+
+            dg.ItemsSource = dc.OrderServices.Where(os => os.Orders.Cars.Persons == listOwner.SelectedItem as Persons && os.Orders.IsFinished)
+                                             .Select(os => new { Дата = os.Orders.FinishDate.ToShortDateString(), Неисправность = os.CarMalfunctions.Malfunctions });
         }//Show
     }
 }

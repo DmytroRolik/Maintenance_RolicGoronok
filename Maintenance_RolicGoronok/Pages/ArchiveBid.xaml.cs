@@ -29,23 +29,16 @@ namespace Maintenance_RolicGoronok
             Loaded += ArchiveBid_Loaded;
         }
 
+        //При загрузке
         private void ArchiveBid_Loaded(object sender, RoutedEventArgs e)
         {
-            lvAppeal.ItemsSource = dc.Bids.Where(b => b.Finish == true).Select(b => new { Номер = b.Id, Клиент = b.Appeal.Client.Surname, Модель = b.Appeal.Car.Model.Name, ГосНомер = b.Appeal.Car.Number, Дата = b.Appeal.dateAppeal.Day + "-" + b.Appeal.dateAppeal.Month + "-" + b.Appeal.dateAppeal.Year });
-        }
+            lvAppeal.ItemsSource = dc.Orders.Where(o => o.IsFinished);
+        }//AllBid_Loaded
 
-      
-
+        // При выборе в listView
         private void lvAppeal_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Regex myReg = new Regex(@"\d+");
-
-            Match match = myReg.Match(lvAppeal.SelectedItem.ToString());
-
-            int.TryParse(match.Value, out id);
-
-
-            dg.ItemsSource = dc.Works.Where(w => w.BidId == id).Select(w => new { w.Attire.Malfunction.Name, service = w.Attire.ServicesInfo.Name, w.Attire.ServicesInfo.Price, w.Attire.Employee.Surname, w.Bid.FinishDate });
-        }
+            dg.ItemsSource = dc.Executors.Where(ex => ex.OrderServices.Orders == lvAppeal.SelectedItem as Orders);
+        }//lvAppeal_SelectionChanged
     }
 }

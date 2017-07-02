@@ -5,9 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Maintenance_RolicGoronok"
         mc:Ignorable="d"
-        Title="Новый работник" Height="300" Width="420" WindowStartupLocation="CenterScreen" Background="WhiteSmoke">
+        Title="Новый работник" Height="400" Width="420" WindowStartupLocation="CenterScreen" Background="WhiteSmoke">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
@@ -23,23 +27,32 @@
             <ColumnDefinition Width="1.4*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Style="{DynamicResource LabelSecond}" Content="Фамилия" FontSize="20" />
+        <Label Style="{DynamicResource LabelSecond}" Content="Фамилия" FontSize="20"  Grid.Row="0"/>
         <Label Style="{DynamicResource LabelSecond}" Content="Имя" FontSize="20" Grid.Row="1"/>
         <Label Style="{DynamicResource LabelSecond}" Content="Отчество" FontSize="20" Grid.Row="2"/>
-        <Label Style="{DynamicResource LabelSecond}" Content="Категория" FontSize="20" Grid.Row="3"/>
-        <Label Style="{DynamicResource LabelSecond}" Content="Опыт" FontSize="20" Grid.Row="4"/>
-        <Label Style="{DynamicResource LabelSecond}" Content="Специальность" FontSize="20" Grid.Row="5"/>
+        <Label Style="{DynamicResource LabelSecond}" Content="Дата рождения" FontSize="20" Grid.Row="3"/>
+        <Label Style="{DynamicResource LabelSecond}" Content="Адрес" FontSize="20" Grid.Row="4"/>
+        <Label Style="{DynamicResource LabelSecond}" Content="Серия паспорта" FontSize="20" Grid.Row="5"/>
+        <Label Style="{DynamicResource LabelSecond}" Content="Права" FontSize="20" Grid.Row="6" />
+        <Label Style="{DynamicResource LabelSecond}" Content="Специальность" FontSize="20" Grid.Row="7"/>
+        <Label Style="{DynamicResource LabelSecond}" Content="Опыт" FontSize="20" Grid.Row="8"/>
+        <Label Style="{DynamicResource LabelSecond}" Content="Категория" FontSize="20" Grid.Row="9"/>
+        
 
 
-        <TextBox x:Name="surname" Width="220" Style="{DynamicResource textBox}" Text="{Binding Path=Surname,UpdateSourceTrigger=PropertyChanged }" Grid.Column="1" />
-        <TextBox x:Name="name" Width="220" Style="{DynamicResource textBox}" Grid.Column="1" Grid.Row="1"/>
-        <TextBox x:Name="patronymic" Width="220" Style="{DynamicResource textBox}" Grid.Column="1" Grid.Row="2" />
-        <ComboBox x:Name="category" Width="220" Height="30"  FontSize="15" Grid.Column="1" Grid.Row="3" SelectionChanged="category_SelectionChanged"/>
-        <TextBox  x:Name="ex" Width="220" Style="{DynamicResource textBox}" Grid.Column="1" Grid.Row="4"/>
-        <ComboBox x:Name="speciality" Height="30" Width="220" FontSize="15" Grid.Column="1" Grid.Row="5" SelectionChanged="speciality_SelectionChanged"/>
+        <TextBox  x:Name="surname" Width="220" Style="{DynamicResource textBox}" Text="{Binding Path=Surname,UpdateSourceTrigger=PropertyChanged }" Grid.Column="1" />
+        <TextBox  x:Name="name" Width="220" Style="{DynamicResource textBox}" Grid.Column="1" Grid.Row="1"/>
+        <TextBox  x:Name="patronymic" Width="220" Style="{DynamicResource textBox}" Grid.Column="1" Grid.Row="2" />
+        <DatePicker x:Name="dob" Width="220" Height="25" Grid.Column="1" Grid.Row="3"/>
+        <TextBox  x:Name="address" Width="220" Style="{DynamicResource textBox}" Grid.Column="1" Grid.Row="4"/>
+        <TextBox  x:Name="passport" Width="220" Style="{DynamicResource textBox}" Grid.Column="1" Grid.Row="5"/>
+        <TextBox  x:Name="licen" Width="220" Style="{DynamicResource textBox}" Grid.Column="1" Grid.Row="6"/>
+        <ComboBox x:Name="speciality" Height="30" Width="220" FontSize="15" Grid.Column="1" Grid.Row="7"/>
+        <TextBox  x:Name="ex" Width="220" Style="{DynamicResource textBox}" Grid.Column="1" Grid.Row="8"/>
+        <ComboBox x:Name="category" Width="220" Height="30"  FontSize="15" Grid.Column="1" Grid.Row="9"/>
 
-        <StackPanel  Grid.Row="6" Grid.ColumnSpan="2" Orientation="Horizontal" >
-            <Button x:Name="accept" Margin="10 0 135 0" Content="Принять" Style="{DynamicResource Button}" Grid.Row="7" Click="accept_Click"/>
+        <StackPanel  Grid.Row="10" Grid.ColumnSpan="2" Orientation="Horizontal" >
+            <Button x:Name="accept" Margin="10 0 135 0" Content="Принять" Style="{DynamicResource Button}" Click="accept_Click"/>
             <Button  Content="Отмена" Style="{DynamicResource Button}" IsCancel="True" />
         </StackPanel>
     </Grid>

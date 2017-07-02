@@ -5,12 +5,67 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Maintenance_RolicGoronok"
         mc:Ignorable="d"
-        Title="Check" Height="300" Width="500" WindowStartupLocation="CenterScreen">
+        Title="Чек" Height="400" Width="600" WindowStartupLocation="CenterScreen">
     <Grid>
-        <TextBlock TextAlignment="Center">  <Run  FontSize="22"  >Чек</Run></TextBlock>
-        <TextBlock x:Name="service" Margin="0 45 0 0" TextAlignment="Justify"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
 
+        <ToolBar Grid.Row="0">
+            <Button x:Name="tlbtnPrint" 
+                    ToolTip="Печать" 
+                    Width="35"
+                    Height="30"
+                    Click="tlbtnPrint_Click">
+                <Image Source="Image/print.png"/>
+            </Button>
+        </ToolBar>
 
+        <FlowDocumentPageViewer Grid.Row="1" Name="fdsvMain">
+            <FlowDocument Name="fdReport">
+
+                <Paragraph TextAlignment="Center"
+                           Name="pHeader"
+                           FontWeight="Bold"
+                           FontSize="18"/>
+
+                <Table CellSpacing="0">
+                    <Table.Columns>
+                        <TableColumn Width="2*"/>
+                        <TableColumn Width="2*"/>
+                        <TableColumn Width="*"/>
+                    </Table.Columns>
+
+                    <TableRowGroup Name="tableRows">
+                        <TableRow>
+                            <TableCell BorderBrush="Black" BorderThickness="1">
+                                <Paragraph TextAlignment="Center"
+                                           FontWeight="Bold">
+                                    Неисправность
+                                </Paragraph>
+                            </TableCell>
+                            <TableCell BorderBrush="Black" BorderThickness="1">
+                                <Paragraph TextAlignment="Center"
+                                           FontWeight="Bold">
+                                    Услуга
+                                </Paragraph>
+                            </TableCell>
+                            <TableCell BorderBrush="Black" BorderThickness="1">
+                                <Paragraph TextAlignment="Center"
+                                           FontWeight="Bold">
+                                    Стоимость
+                                </Paragraph>
+                            </TableCell>
+                        </TableRow>
+                    </TableRowGroup>
+                </Table>
+
+                <Paragraph TextAlignment="Right"
+                           Name="pTotal"
+                           FontSize="14"/>
+            </FlowDocument>
+        </FlowDocumentPageViewer>
 
     </Grid>
 </Window>

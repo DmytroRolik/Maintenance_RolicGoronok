@@ -19,7 +19,7 @@
             <RowDefinition Height="120"/>
             <RowDefinition/>
             <RowDefinition Height="50"/>
-            <RowDefinition Height="250"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
         <!--Grid Клиента-->
@@ -92,7 +92,7 @@
 
             <TextBox Style="{DynamicResource TextBoxHeader}" Text="Выберите услуги"  />
 
-            <!--ListView Неисправности -->
+            <!--ListView услуги -->
             <ListView Height="auto" Width="auto" Style="{DynamicResource listView}" Grid.Row="2"   x:Name="lvServices"/>
         </Grid>
 
@@ -105,8 +105,9 @@
 
             <TextBox Style="{DynamicResource TextBoxHeader}" Text="Выберите работника"  />
 
-            <!--ListView Неисправности -->
-            <ListView Height="auto" Width="auto" Style="{DynamicResource listView}" Grid.Row="2"   x:Name="lvEmpl"/>
+            <!--ListView работники -->
+            <ListView Height="auto" Width="auto" Style="{DynamicResource listView}" Grid.Row="2"   x:Name="lvEmpl"
+                      SelectionMode="Multiple"/>
         </Grid>
 
 
@@ -114,29 +115,31 @@
 
             <StackPanel Orientation="Horizontal" Margin="0 35 0 0"  >
                 <Label Style="{DynamicResource LabelSecond}" Foreground="Wheat"  Content="Поставлен на ремонт " FontSize="18" />
-                <DatePicker x:Name="dateFrom" Width="150" Height="25" />
+                <DatePicker x:Name="dateFrom" Width="150" Height="25" SelectedDateChanged="dateFrom_SelectedDateChanged"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="0 15 0 0" >
                 <Label Style="{DynamicResource LabelSecond}" Foreground="Wheat" Content="Дата возврата " FontSize="18" />
-                <DatePicker x:Name="dateTo" Width="150" Height="25" Margin="57 0 0 0" />
+                <DatePicker x:Name="dateTo" Width="150" Height="25" Margin="57 0 0 0" SelectedDateChanged="dateTo_SelectedDateChanged"/>
             </StackPanel>
         </StackPanel>
 
-        <DataGrid Grid.Row="3" AutoGenerateColumns="False" Grid.Column="0" Grid.ColumnSpan="3" x:Name="dgattire" Style="{DynamicResource DataGridStyle}">
+        <DataGrid Grid.Row="3" AutoGenerateColumns="False" Grid.Column="0" Grid.ColumnSpan="3" x:Name="dgService" Style="{DynamicResource DataGridStyle}"
+                  IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Неисправность" Binding="{Binding Path=Malfun}" Width="550"/>
-                <DataGridTextColumn Header="Услуга" Binding="{Binding Path=Servec}" Width="420"/>
-                <DataGridTextColumn Header="Работник" Binding="{Binding Path=Employee}" Width="450"/>
+                <DataGridTextColumn Header="Неисправность" Binding="{Binding Path=OrderServices.CarMalfunctions.Malfunctions}" Width="1.5*"/>
+                <DataGridTextColumn Header="Услуга" Binding="{Binding Path=OrderServices.ServicesInfos}" Width="1*"/>
+                <DataGridTextColumn Header="Работник" Binding="{Binding Path=Employees}" Width="1*"/>
             </DataGrid.Columns>
         </DataGrid>
 
 
-        <StackPanel Orientation="Horizontal"  Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3">
-            <Button x:Name="add" Margin="30 0 0 0" Content="Добавить наряд" Width="180" Style="{DynamicResource Button}" Click="add_Click"/>
 
-            <Button x:Name="addBids" Margin="900 0 0 0" Content="Добавить заявку" Width="180" Style="{DynamicResource Button}" Click="addBids_Click"/>
+        <Button x:Name="addService" Content="Добавить заявку" Width="180" Style="{DynamicResource Button}" Click="addService_Click"
+                Grid.Row="2" Grid.Column="0"/>
 
-        </StackPanel>
+        <Button x:Name="addOrder" Content="Добавить заказ" Width="180" Style="{DynamicResource Button}" Click="addOrder_Click"
+                Grid.Row="2" Grid.Column="2"/>
+
     </Grid>
 </Page>

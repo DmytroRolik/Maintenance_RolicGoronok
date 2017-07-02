@@ -30,7 +30,7 @@ namespace Maintenance_RolicGoronok
         private void add_Click(object sender, RoutedEventArgs e)
         {
             // Проверяем все ли данные введены
-            if (FieldsAreFilled()) { MessageBox.Show("Не все данные введены"); return; }
+            if (FieldsAreNotFilled()) { MessageBox.Show("Не все данные введены"); return; }
 
             // Проверяем есть ли такая модель
             int count = dc.Models.Where(m => m.Name == model.Text).Count();
@@ -39,36 +39,32 @@ namespace Maintenance_RolicGoronok
             if (count > 0) { MessageBox.Show("Такая модель уже есть"); return; }
 
             // Добавляем запись в базу
-            dc.Models.InsertAllOnSubmit(Parsing());
+            dc.Models.InsertOnSubmit(GetModel());
             try
             {
                 dc.SubmitChanges();
-                MessageBox.Show($"Новая модель добавлена в {DateTime.Now}");
+                MessageBox.Show($"Новая модель добавлена");
             }
             catch (Exception f)
             {
                 MessageBox.Show(f.Message);
-                dc.SubmitChanges();
             }//try-catch
         }//add_Click
 
 
         // Извлекаем данные из окна
-        private IEnumerable<Model> Parsing()
+        private Models GetModel()
         {
-            var models = new Model();
-            models.Name = model.Text;
-            return new List<Model>(new[] { models });
-        }//Parsing
+            Models newModel = new Models();
+            newModel.Name = model.Text;
 
-
+            return newModel;
+        }//GetModel
 
         // Метод проверяет все ли данные введены
-        private bool FieldsAreFilled()
+        private bool FieldsAreNotFilled()
         {
-            if (string.IsNullOrWhiteSpace(model.Text)) return true;
-
-            return false;
-        }//FieldsAreFilled
+            return string.IsNullOrWhiteSpace(model.Text);
+        }//FieldsAreNotFilled
     }
 }

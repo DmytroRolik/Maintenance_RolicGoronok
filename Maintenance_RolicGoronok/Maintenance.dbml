@@ -1,69 +1,100 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Service" Class="MaintenanceDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=.\SQLEXPRESS;Initial Catalog=Service;Integrated Security=True" SettingsObjectName="Maintenance_RolicGoronok.Properties.Settings" SettingsPropertyName="ServiceConnectionString" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.Appeal" Member="Appeals">
-    <Type Name="Appeal">
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ServiceStation" Class="MaintenanceDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=DMYTROROLIK-PC\SQLEXPRESS;Initial Catalog=ServiceStation;Integrated Security=True;Encrypt=False;TrustServerCertificate=True" SettingsObjectName="Maintenance_RolicGoronok.Properties.Settings" SettingsPropertyName="ServiceStationConnectionString1" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.CarMalfunctions" Member="CarMalfunctions">
+    <Type Name="CarMalfunctions">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="dateAppeal" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
       <Column Name="CarId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="ClientId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Appeal_Bid" Member="Bids" ThisKey="Id" OtherKey="AppealId" Type="Bid" />
-      <Association Name="Car_Appeal" Member="Car" ThisKey="CarId" OtherKey="Id" Type="Car" IsForeignKey="true" />
-      <Association Name="Client_Appeal" Member="Client" ThisKey="ClientId" OtherKey="Id" Type="Client" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.[Work]" Member="Works">
-    <Type Name="Work">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="BidId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="AttireId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Attire_Work" Member="Attire" ThisKey="AttireId" OtherKey="Id" Type="Attire" IsForeignKey="true" />
-      <Association Name="Bid_Work" Member="Bid" ThisKey="BidId" OtherKey="Id" Type="Bid" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Attire" Member="Attires">
-    <Type Name="Attire">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="MalfunctionId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="ServicesInfoId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="EmployeeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Attire_Work" Member="Works" ThisKey="Id" OtherKey="AttireId" Type="Work" />
-      <Association Name="Employee_Attire" Member="Employee" ThisKey="EmployeeId" OtherKey="Id" Type="Employee" IsForeignKey="true" />
-      <Association Name="Malfunction_Attire" Member="Malfunction" ThisKey="MalfunctionId" OtherKey="Id" Type="Malfunction" IsForeignKey="true" />
-      <Association Name="ServicesInfo_Attire" Member="ServicesInfo" ThisKey="ServicesInfoId" OtherKey="Id" Type="ServicesInfo" IsForeignKey="true" />
+      <Association Name="CarMalfunctions_OrderServices" Member="OrderServices" ThisKey="Id" OtherKey="MalfunctionId" Type="OrderServices" />
+      <Association Name="Cars_CarMalfunctions" Member="Cars" ThisKey="CarId" OtherKey="Id" Type="Cars" IsForeignKey="true" />
+      <Association Name="Malfunctions_CarMalfunctions" Member="Malfunctions" ThisKey="MalfunctionId" OtherKey="Id" Type="Malfunctions" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Bid" Member="Bids">
-    <Type Name="Bid">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="AppealId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="FinishDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
-      <Column Name="Finish" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Association Name="Bid_Work" Member="Works" ThisKey="Id" OtherKey="BidId" Type="Work" />
-      <Association Name="Appeal_Bid" Member="Appeal" ThisKey="AppealId" OtherKey="Id" Type="Appeal" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Car" Member="Cars">
-    <Type Name="Car">
+  <Table Name="dbo.Cars" Member="Cars">
+    <Type Name="Cars">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="ModelId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="ProductionYear" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
       <Column Name="Number" Type="System.String" DbType="NVarChar(8) NOT NULL" CanBeNull="false" />
       <Column Name="Color" Type="System.String" DbType="NVarChar(25) NOT NULL" CanBeNull="false" />
       <Column Name="OwnerId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Car_Appeal" Member="Appeals" ThisKey="Id" OtherKey="CarId" Type="Appeal" />
-      <Association Name="Model_Car" Member="Model" ThisKey="ModelId" OtherKey="Id" Type="Model" IsForeignKey="true" />
-      <Association Name="Owner_Car" Member="Owner" ThisKey="OwnerId" OtherKey="Id" Type="Owner" IsForeignKey="true" />
+      <Association Name="Cars_CarMalfunctions" Member="CarMalfunctions" ThisKey="Id" OtherKey="CarId" Type="CarMalfunctions" />
+      <Association Name="Cars_Orders" Member="Orders" ThisKey="Id" OtherKey="CarId" Type="Orders" />
+      <Association Name="Models_Cars" Member="Models" ThisKey="ModelId" OtherKey="Id" Type="Models" IsForeignKey="true" />
+      <Association Name="Persons_Cars" Member="Persons" ThisKey="OwnerId" OtherKey="Id" Type="Persons" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Categorie" Member="Categories">
-    <Type Name="Categorie">
+  <Table Name="dbo.Categories" Member="Categories">
+    <Type Name="Categories">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Association Name="Categorie_Employee" Member="Employees" ThisKey="Id" OtherKey="CategoryId" Type="Employee" />
+      <Association Name="Categories_Employees" Member="Employees" ThisKey="Id" OtherKey="CategoryId" Type="Employees" />
     </Type>
   </Table>
-  <Table Name="dbo.Client" Member="Clients">
-    <Type Name="Client">
+  <Table Name="dbo.Employees" Member="Employees">
+    <Type Name="Employees">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PersonId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SpecialityId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CategoryId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Experience" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsWorking" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Employees_Executors" Member="Executors" ThisKey="Id" OtherKey="EmployeeId" Type="Executors" />
+      <Association Name="Categories_Employees" Member="Categories" ThisKey="CategoryId" OtherKey="Id" Type="Categories" IsForeignKey="true" />
+      <Association Name="Persons_Employees" Member="Persons" ThisKey="PersonId" OtherKey="Id" Type="Persons" IsForeignKey="true" />
+      <Association Name="Specialities_Employees" Member="Specialities" ThisKey="SpecialityId" OtherKey="Id" Type="Specialities" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Executors" Member="Executors">
+    <Type Name="Executors">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ServiceId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EmployeeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Employees_Executors" Member="Employees" ThisKey="EmployeeId" OtherKey="Id" Type="Employees" IsForeignKey="true" />
+      <Association Name="OrderServices_Executors" Member="OrderServices" ThisKey="ServiceId" OtherKey="Id" Type="OrderServices" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Malfunctions" Member="Malfunctions">
+    <Type Name="Malfunctions">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="Malfunctions_CarMalfunctions" Member="CarMalfunctions" ThisKey="Id" OtherKey="MalfunctionId" Type="CarMalfunctions" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Models" Member="Models">
+    <Type Name="Models">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Models_Cars" Member="Cars" ThisKey="Id" OtherKey="ModelId" Type="Cars" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Orders" Member="Orders">
+    <Type Name="Orders">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ClientId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CarId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="BeginDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="FinishDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="IsFinished" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Orders_OrderServices" Member="OrderServices" ThisKey="Id" OtherKey="OrderId" Type="OrderServices" />
+      <Association Name="Cars_Orders" Member="Cars" ThisKey="CarId" OtherKey="Id" Type="Cars" IsForeignKey="true" />
+      <Association Name="Persons_Orders" Member="Persons" ThisKey="ClientId" OtherKey="Id" Type="Persons" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.OrderServices" Member="OrderServices">
+    <Type Name="OrderServices">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="OrderId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ServiceId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="MalfunctionId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="OrderServices_Executors" Member="Executors" ThisKey="Id" OtherKey="ServiceId" Type="Executors" />
+      <Association Name="CarMalfunctions_OrderServices" Member="CarMalfunctions" ThisKey="MalfunctionId" OtherKey="Id" Type="CarMalfunctions" IsForeignKey="true" />
+      <Association Name="Orders_OrderServices" Member="Orders" ThisKey="OrderId" OtherKey="Id" Type="Orders" IsForeignKey="true" />
+      <Association Name="ServicesInfos_OrderServices" Member="ServicesInfos" ThisKey="ServiceId" OtherKey="Id" Type="ServicesInfos" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Persons" Member="Persons">
+    <Type Name="Persons">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Surname" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
@@ -71,63 +102,25 @@
       <Column Name="BirthDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
       <Column Name="Address" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
       <Column Name="Passport" Type="System.String" DbType="NVarChar(8) NOT NULL" CanBeNull="false" />
-      <Column Name="License" Type="System.String" DbType="NVarChar(15) NOT NULL" CanBeNull="false" />
-      <Column Name="Phone" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
-      <Association Name="Client_Appeal" Member="Appeals" ThisKey="Id" OtherKey="ClientId" Type="Appeal" />
+      <Column Name="License" Type="System.String" DbType="NVarChar(12)" CanBeNull="true" />
+      <Association Name="Persons_Cars" Member="Cars" ThisKey="Id" OtherKey="OwnerId" Type="Cars" />
+      <Association Name="Persons_Employees" Member="Employees" ThisKey="Id" OtherKey="PersonId" Type="Employees" />
+      <Association Name="Persons_Orders" Member="Orders" ThisKey="Id" OtherKey="ClientId" Type="Orders" />
     </Type>
   </Table>
-  <Table Name="dbo.Employee" Member="Employees">
-    <Type Name="Employee">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Surname" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Patronymic" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="SpecialityId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="CategoryId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Experience" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IsWorking" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Association Name="Employee_Attire" Member="Attires" ThisKey="Id" OtherKey="EmployeeId" Type="Attire" />
-      <Association Name="Categorie_Employee" Member="Categorie" ThisKey="CategoryId" OtherKey="Id" Type="Categorie" IsForeignKey="true" />
-      <Association Name="Specialitie_Employee" Member="Specialitie" ThisKey="SpecialityId" OtherKey="Id" Type="Specialitie" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Malfunction" Member="Malfunctions">
-    <Type Name="Malfunction">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
-      <Association Name="Malfunction_Attire" Member="Attires" ThisKey="Id" OtherKey="MalfunctionId" Type="Attire" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Model" Member="Models">
-    <Type Name="Model">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Association Name="Model_Car" Member="Cars" ThisKey="Id" OtherKey="ModelId" Type="Car" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Owner" Member="Owners">
-    <Type Name="Owner">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Surname" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Patronymic" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Address" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
-      <Association Name="Owner_Car" Member="Cars" ThisKey="Id" OtherKey="OwnerId" Type="Car" />
-    </Type>
-  </Table>
-  <Table Name="dbo.ServicesInfo" Member="ServicesInfos">
-    <Type Name="ServicesInfo">
+  <Table Name="dbo.ServicesInfos" Member="ServicesInfos">
+    <Type Name="ServicesInfos">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
       <Column Name="Price" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="ServicesInfo_Attire" Member="Attires" ThisKey="Id" OtherKey="ServicesInfoId" Type="Attire" />
+      <Association Name="ServicesInfos_OrderServices" Member="OrderServices" ThisKey="Id" OtherKey="ServiceId" Type="OrderServices" />
     </Type>
   </Table>
-  <Table Name="dbo.Specialitie" Member="Specialities">
-    <Type Name="Specialitie">
+  <Table Name="dbo.Specialities" Member="Specialities">
+    <Type Name="Specialities">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Association Name="Specialitie_Employee" Member="Employees" ThisKey="Id" OtherKey="SpecialityId" Type="Employee" />
+      <Association Name="Specialities_Employees" Member="Employees" ThisKey="Id" OtherKey="SpecialityId" Type="Employees" />
     </Type>
   </Table>
 </Database>

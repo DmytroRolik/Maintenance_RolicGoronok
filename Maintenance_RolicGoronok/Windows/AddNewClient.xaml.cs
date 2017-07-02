@@ -19,7 +19,7 @@ namespace Maintenance_RolicGoronok
     /// </summary>
     public partial class AddNewClient : Window
     {
-        MaintenanceDataContext dc = new MaintenanceDataContext();
+        MaintenanceDataContext dc;
         public AddNewClient()
         {
             InitializeComponent();
@@ -28,57 +28,48 @@ namespace Maintenance_RolicGoronok
         private void add_Click(object sender, RoutedEventArgs e)
         {
             //проверяет все ли данные введены
-            if (FieldsAreFilled()) { MessageBox.Show("Не все данные введены"); return; }
+            if (FieldsAreNotFilled()) { MessageBox.Show("Не все данные введены"); return; }
 
-            dc.Clients.InsertAllOnSubmit(Parsing());
-            SubmitChanges("Клиент добавлен");
-        }
+            using (dc = new MaintenanceDataContext()) {
+                dc.Persons.InsertOnSubmit(GetPerson());
+                try {
+                    dc.SubmitChanges();
+                    MessageBox.Show("Клиент добавлен");
+                }
+                catch (Exception f) {
+                    MessageBox.Show(f.Message);
+                }// try-catch
+            }// using
+        }// add_Click
 
 
         // Метод проверяет все ли данные введены
-        private bool FieldsAreFilled()
+        private bool FieldsAreNotFilled()
         {
             // Имеет ли указанная строка значение null, является ли она пустой строкой или строкой,
             // состоящей только из символов-разделителей.
 
-            if (string.IsNullOrWhiteSpace(address.Text)
+            return string.IsNullOrWhiteSpace(address.Text)
                 || string.IsNullOrWhiteSpace(name.Text)
                 || string.IsNullOrWhiteSpace(patronymic.Text)
                 || string.IsNullOrWhiteSpace(surname.Text)
                 || string.IsNullOrWhiteSpace(passport.Text)
-                || string.IsNullOrWhiteSpace(licen.Text)) return true;
-
-            if (dob.SelectedDate == null) return true;
-
-            return false;
-        }//FieldsAreFilled
+                || string.IsNullOrWhiteSpace(licen.Text) 
+                || dob.SelectedDate == null;
+        }//FieldsAreNotFilled
 
         // Метод Parsing извлекаем данные из окна и возвращаем их в виде объкта Client
-        private List<Client> Parsing()
+        private Persons GetPerson()
         {
-            var person = new Client();
-            person.Surname = surname.Text;
-            person.Name = name.Text;
-            person.Patronymic = patronymic.Text;
-            person.Address = address.Text;
-            person.Passport = passport.Text;
-            person.BirthDate = dob.SelectedDate.Value;
+            Persons newPerson = new Persons();
+            newPerson.Surname = surname.Text;
+            newPerson.Name = name.Text;
+            newPerson.Patronymic = patronymic.Text;
+            newPerson.Address = address.Text;
+            newPerson.Passport = passport.Text;
+            newPerson.BirthDate = dob.SelectedDate.Value;
 
-            return new List<Client>(new[] { person });
-        }//Parsing
-
-        public void SubmitChanges(string text)
-        {
-            try
-            {
-                dc.SubmitChanges();
-                MessageBox.Show(text + "  {0}, DateTime.Now");
-            }
-            catch (Exception f)
-            {
-                MessageBox.Show(f.Message);
-                dc.SubmitChanges();
-            }
-        }
+            return newPerson;
+        }//GetPerson
     }
 }

@@ -19,8 +19,8 @@ namespace Maintenance_RolicGoronok
     /// </summary>
     public partial class EditClient : Window
     {
-        MaintenanceDataContext dc = new MaintenanceDataContext();
-        int idclient;
+        MaintenanceDataContext dc;
+        Persons SelectedClient { get; set; }
         public EditClient()
         {
             InitializeComponent();
@@ -29,49 +29,44 @@ namespace Maintenance_RolicGoronok
 
         private void EditClient_Loaded(object sender, RoutedEventArgs e)
         {
-           lvClient.ItemsSource = dc.Clients.Select(p => new { Фамилия = p.Surname + " " + p.Name[0] + "." + p.Patronymic[0] }).Select(p => p.Фамилия);
-        }
+            using (dc = new MaintenanceDataContext()) {
+                lvClient.ItemsSource = dc.Persons;
+            }// using
+        }// EditClient_Loaded
 
         // При выборе в listView lvClient заполняем окно из базы
         private void lvClient_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Client client = dc.Clients.Where(c => c.Surname + " " + c.Name[0] + "." + c.Patronymic[0] == lvClient.SelectedItem.ToString()).Select(c => c).Single();
+            SelectedClient = lvClient.SelectedItem as Persons;
 
-            licen.Text = client.License;
-            phone.Text = client.Phone;
-            address.Text = client.Address;
-            passport.Text = client.Passport;
-            idclient = client.Id;
-        }
+            licen.Text = SelectedClient.License;
+            address.Text = SelectedClient.Address;
+            passport.Text = SelectedClient.Passport;
+        }// lvClient_SelectionChanged
 
-      
+
         // При нажатии кнопки изменить
         private void change_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                ChengeInfo(idclient);
+                ChangeClientInfo();
+                using (dc = new MaintenanceDataContext())
+                    dc.SubmitChanges();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-            }
+            }// try-catch
            
         }//change_Click
 
-        // Изменяем информацию о клиенте из окна
-        private void ChengeInfo(int id)
+        // применить изменения для текущего клиента
+        public void ChangeClientInfo()
         {
-            var query = from cl in dc.Clients where cl.Id == id select cl;
-
-            foreach (var item in query)
-            {
-                item.License = licen.Text;
-                item.Phone = phone.Text;
-                item.Address = address.Text;
-                item.Passport = passport.Text;
-            }
-            dc.SubmitChanges();
-        }//ChengeInfo
+            SelectedClient.License = licen.Text;
+            SelectedClient.Address = address.Text;
+            SelectedClient.Passport = passport.Text;
+        }// ChangeClientInfo
     }
 }

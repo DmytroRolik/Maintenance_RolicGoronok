@@ -29,70 +29,63 @@ namespace Maintenance_RolicGoronok
 
         private void AddEmployee_Loaded(object sender, RoutedEventArgs e)
         {
-            category.ItemsSource = dc.Categories.Select(c=> c.Name);
-            speciality.ItemsSource = dc.Specialities.Select(s=> s.Name);
+            category.ItemsSource = dc.Categories;
+            speciality.ItemsSource = dc.Specialities;
         }
 
         // При нажатии принять
         private void accept_Click(object sender, RoutedEventArgs e)
         {
-            if (FieldsAreFilled()) { MessageBox.Show("Не все данные введены!"); return; }
+            if (FieldsAreNotFilled()) { MessageBox.Show("Не все данные введены!"); return; }
 
-            dc.Employees.InsertAllOnSubmit(Parsing());
+            dc.Employees.InsertOnSubmit(GetEmployee());
             try
             {
                 dc.SubmitChanges();
-                MessageBox.Show($"Добавлен новый работник в  {DateTime.Now}");
+                MessageBox.Show($"Добавлен новый работник");
             }
             catch (Exception f)
             {
                 MessageBox.Show(f.Message);
-                dc.SubmitChanges();
             }
         }
 
-        private void category_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            idcategory = dc.Categories.Where(c => c.Name == category.SelectedItem.ToString()).Select(c => c.Id).Single();
-        }
-
-        private void speciality_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            idspecialiti = dc.Specialities.Where(s => s.Name == speciality.SelectedItem.ToString()).Select(s => s.Id).Single();
-        }
-
         // Метод Parsing извлекаем данные из окна и возвращаем их в виде объкта Employee
-        private List<Employee> Parsing()
+        private Employees GetEmployee()
         {
-            int.TryParse(ex.Text, out experience);
+            Employees newEmp = new Employees();
 
-            var employee = new Employee();
-            employee.Surname = surname.Text;
-            employee.Name = name.Text;
-            employee.Patronymic = patronymic.Text;
-            employee.CategoryId = idcategory;
-            employee.SpecialityId = idspecialiti;
-            employee.Experience = experience;
+            Persons temp = new Persons();
+            temp.Surname = surname.Text;
+            temp.Name = name.Text;
+            temp.Patronymic = patronymic.Text;
+            temp.BirthDate = dob.SelectedDate.Value;
+            temp.Address = address.Text;
+            temp.Passport = passport.Text;
+            temp.License = licen.Text;
 
-            return new List<Employee>(new[] { employee });
+            newEmp.Persons = temp;
+            newEmp.Specialities = speciality.SelectedItem as Specialities;
+            newEmp.Categories = category.SelectedItem as Categories;
+            newEmp.Experience = int.Parse(ex.Text);
+
+            return newEmp;
         }//Parsing
 
 
         // Метод проверяет все ли данные введены
-        private bool FieldsAreFilled()
+        private bool FieldsAreNotFilled()
         {
-            // Имеет ли указанная строка значение null, является ли она пустой строкой или строкой,
-            // состоящей только из символов-разделителей.
-
-            if (string.IsNullOrWhiteSpace(name.Text)
-                || string.IsNullOrWhiteSpace(patronymic.Text)
-                || string.IsNullOrWhiteSpace(surname.Text)
-                || string.IsNullOrWhiteSpace(ex.Text) ) return true;
-
-            if (category.SelectedItem == null || speciality.SelectedItem == null) return true;
-
-            return false;
-        }//FieldsAreFilled
+            int exp;
+            return string.IsNullOrWhiteSpace(name.Text) ||
+                   string.IsNullOrWhiteSpace(surname.Text) ||
+                   dob.SelectedDate.HasValue ||
+                   string.IsNullOrWhiteSpace(address.Text) ||
+                   string.IsNullOrWhiteSpace(passport.Text) ||
+                   speciality.SelectedItem == null ||
+                   int.TryParse(ex.Text, out exp) ||
+                   category.SelectedItem == null;
+        }//FieldsAreNotFilled
 
     }
 }

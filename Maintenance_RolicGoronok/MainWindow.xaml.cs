@@ -36,12 +36,14 @@ namespace Maintenance_RolicGoronok
         // При загрузке главного окна
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            // Создаем и заполняем базу и таблицы
-            CreateAndInsertTable createInsertTable = new CreateAndInsertTable();
-            createInsertTable.StartConnection();
-
             editClient.Click += (s, en) => new EditClient().ShowDialog();
+
             newEmp.Click += (s, en) => new AddEmployee().ShowDialog();
+            newModel.Click += (s, en) => new AddModel().ShowDialog();
+            newCar.Click += (s, en) => new AddNewCar().ShowDialog();
+            newClient.Click += (s, en) => new AddNewClient().ShowDialog();
+
+            printReport.Click += (s, en) => new Windows.ReportPrinting().ShowDialog();
         }//MainWindow_Loaded
 
         // При нажатии на кнопку закрыть вкладку

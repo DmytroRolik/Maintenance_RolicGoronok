@@ -22,22 +22,23 @@
         <ListView x:Name="lvAppeal" Style="{DynamicResource listView}" SelectionChanged="lvAppeal_SelectionChanged">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Заявка" Width="90" DisplayMemberBinding="{Binding Номер}" />
-                    <GridViewColumn Header="Клиент" Width="120" DisplayMemberBinding="{Binding Клиент}" />
-                    <GridViewColumn Header="Модель" Width="120" DisplayMemberBinding="{Binding Модель}" />
-                    <GridViewColumn Header="Номер" Width="120" DisplayMemberBinding="{Binding ГосНомер}" />
-                    <GridViewColumn Header="Дата" Width="100" DisplayMemberBinding="{Binding Дата}" />
+                    <GridViewColumn Header="Заявка" Width="90" DisplayMemberBinding="{Binding Path=Id}" />
+                    <GridViewColumn Header="Клиент" Width="120" DisplayMemberBinding="{Binding Path=Persons}" />
+                    <GridViewColumn Header="Модель" Width="120" DisplayMemberBinding="{Binding Path=Cars.Models}" />
+                    <GridViewColumn Header="Номер" Width="120" DisplayMemberBinding="{Binding Path=Cars.Number}" />
+                    <GridViewColumn Header="Дата" Width="100" DisplayMemberBinding="{Binding Path=ShortBeginDate}" />
                 </GridView>
             </ListView.View>
         </ListView>
 
-        <DataGrid x:Name="dg" Style="{DynamicResource DataGridStyle}" Grid.Column="1" AutoGenerateColumns="False">
+        <DataGrid x:Name="dg" Style="{DynamicResource DataGridStyle}" Grid.Column="1" AutoGenerateColumns="False"
+                  IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Неисправность" Binding="{Binding Path=Name}"/>
-                <DataGridTextColumn Header="Услуга" Binding="{Binding Path=service}"/>
-                <DataGridTextColumn Header="Цена" Binding="{Binding Path=Price}"/>
-                <DataGridTextColumn Header="Работник" Binding="{Binding Path=Surname}"/>
-                <DataGridTextColumn Header="Дата" Binding="{Binding Path=FinishDate}"/>
+                <DataGridTextColumn Header="Неисправность" Binding="{Binding Path=OrderServices.CarMalfunctions.Malfunctions}"/>
+                <DataGridTextColumn Header="Услуга" Binding="{Binding Path=OrderServices.ServicesInfos}"/>
+                <DataGridTextColumn Header="Цена" Binding="{Binding Path=OrderServices.ServicesInfos.Price}"/>
+                <DataGridTextColumn Header="Работник" Binding="{Binding Path=Employees}"/>
+                <DataGridTextColumn Header="Дата" Binding="{Binding Path=OrderServices.Orders.ShortFinishDate}"/>
             </DataGrid.Columns>
         </DataGrid>
 

@@ -19,7 +19,7 @@ namespace Maintenance_RolicGoronok
     /// </summary>
     public partial class AddNewCar : Window
     {
-        MaintenanceDataContext dc = new MaintenanceDataContext();
+        MaintenanceDataContext dc;
         int idmodel, idowner;
         public AddNewCar()
         {
@@ -30,11 +30,13 @@ namespace Maintenance_RolicGoronok
         // При загрузке окна 
         void AddNewCar_Loaded(object sender, RoutedEventArgs e)
         {
-            // Все модели в comboBox model
-            model.ItemsSource = dc.Models.Select(m => m.Name);
-            // Все персоны в comboBox owner
-            owner.ItemsSource = dc.Owners.Select(p => p.Surname + " " + p.Name[0] + "." + p.Patronymic[0]);
-        }
+            using (dc = new MaintenanceDataContext()) {
+                // Все модели в comboBox model
+                model.ItemsSource = dc.Models;
+                // Все персоны в comboBox owner
+                owner.ItemsSource = dc.Persons;
+            }// using
+        }// AddNewCar_Loaded
 
 
         // При нажатии добавить владельца
@@ -42,79 +44,66 @@ namespace Maintenance_RolicGoronok
         {
             new AddNewOwner().ShowDialog();
 
-            // Обновляем персоны в comboBox owner
-            owner.ItemsSource = dc.Owners.Select(p => p.Surname + " " + p.Name[0] + "." + p.Patronymic[0]);
-        }
+            using (dc = new MaintenanceDataContext()) {
+                // Обновляем персоны в comboBox owner
+                owner.ItemsSource = dc.Persons;
+            }// using
+        }// addOwner_Click
 
         private void addModel_Click(object sender, RoutedEventArgs e)
         {
             new AddModel().ShowDialog();
-            // Все модели в comboBox model
-            model.ItemsSource = dc.Models.Select(m => m.Name);
-        }
+
+            using (dc = new MaintenanceDataContext()) {
+                // Все модели в comboBox model
+                model.ItemsSource = dc.Models;
+            }// using
+        }// addModel_Click
 
         private void add_Click(object sender, RoutedEventArgs e)
         {
             //проверяет все ли данные введены
-            if (FieldsAreFilled()) { MessageBox.Show("Не все данные введены"); return; }
+            if (FieldsAreNotFilled()) { MessageBox.Show("Не все данные введены"); return; }
 
-            dc.Cars.InsertAllOnSubmit(Parsing());
-            SubmitChanges("Авто добавлено");
-        }
+            using (dc = new MaintenanceDataContext()) {
+                dc.Cars.InsertOnSubmit(GetCar());
+
+                try {
+                    dc.SubmitChanges();
+                    MessageBox.Show("Авто добавлено");
+                }
+                catch (Exception ex) {
+                    MessageBox.Show(ex.Message);
+                }// try-catch
+            }// using
+        }// add_Click
 
 
         // Метод Parsing извлекаем данные из окна и возвращаем их в виде объкта Car
-        private List<Car> Parsing()
+        private Cars GetCar()
         {
-            var car = new Car();
-            car.Color = color.Text;
-            car.Number = number.Text;
-            car.ModelId = idmodel;
-            car.OwnerId = idowner;
-            car.ProductionYear = date.SelectedDate.Value;
+            Cars newCar = new Cars();
+            newCar.Models = model.SelectedItem as Models;
+            newCar.ProductionYear = date.SelectedDate.Value;
+            newCar.Number = number.Text;
+            newCar.Color = color.Text;
+            newCar.Persons = owner.SelectedItem as Persons;
 
-            return new List<Car>(new[] { car });
-        }//Parsing
+            return newCar;
+        }//GetCar
 
 
         // Метод проверяет все ли данные введены
-        private bool FieldsAreFilled()
+        private bool FieldsAreNotFilled()
         {
             // Имеет ли указанная строка значение null, является ли она пустой строкой или строкой,
             // состоящей только из символов-разделителей.
 
-            if (string.IsNullOrWhiteSpace(color.Text)
-                || string.IsNullOrWhiteSpace(number.Text)) return true;
-
-            if (model.SelectedItem == null || owner.SelectedItem == null) return true;
-            if (date.SelectedDate == null) return true;
-
-            return false;
+            return string.IsNullOrWhiteSpace(color.Text) || 
+                   string.IsNullOrWhiteSpace(number.Text) ||
+                   model.SelectedItem == null || 
+                   owner.SelectedItem == null||
+                   date.SelectedDate == null;
         }//FieldsAreFilled
-
-        // Получаем ид выбраной в comboBox модели
-        private void model_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            idmodel = dc.Models.Where(m => m.Name == model.SelectedItem.ToString()).Select(m => m.Id).Single();
-        }//model_SelectionChanged
-        // Получаем ид выбраного в comboBox владельца
-        private void owner_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            idowner = dc.Owners.Where(o => o.Surname + " " + o.Name[0] + "." + o.Patronymic[0] == owner.SelectedItem.ToString()).Select(o => o.Id).Single();
-        }//owner_SelectionChanged
-
-        public void SubmitChanges(string text)
-        {
-            try
-            {
-                dc.SubmitChanges();
-                MessageBox.Show(text + "  {0}, DateTime.Now");
-            }
-            catch (Exception f)
-            {
-                MessageBox.Show(f.Message);
-                dc.SubmitChanges();
-            }
-        }
     }
 }

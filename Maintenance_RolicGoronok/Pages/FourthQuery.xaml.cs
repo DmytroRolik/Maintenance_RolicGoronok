@@ -21,8 +21,10 @@ namespace Maintenance_RolicGoronok
     public partial class FourthQuery : Page
     {
         MaintenanceDataContext dc = new MaintenanceDataContext();
-        int idCar, idClient;
-        List<int> idBid;
+        Persons curClient;
+        Cars curCar;
+        Malfunctions curMalfunnction;
+
         public FourthQuery()
         {
             InitializeComponent();
@@ -32,35 +34,46 @@ namespace Maintenance_RolicGoronok
         void FourthQuery_Loaded(object sender, RoutedEventArgs e)
         {
             info.Text = "Фамилия, имя, отчество работника станции, устранявшего данную неисправность в автомобиле данного клиента, и время ее устранения";
-            client.ItemsSource = dc.Clients.Select(c => c.Surname + " " + c.Name[0] + "." + c.Patronymic[0]);
+            client.ItemsSource = dc.Persons.Where(p => p.Cars != null);
         }//FourthQuery_Loaded
 
         private void client_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            idClient = dc.Clients.Where(c => c.Surname + " " + c.Name[0] + "." + c.Patronymic[0] == client.SelectedItem.ToString()).Select(c => c.Id).Single();
-            car.ItemsSource = dc.Appeals.Where(a => a.ClientId == idClient).GroupBy(a=> a.Car.Number).Select(g => g.Key);
+            if (car.SelectedItem != null)
+                ResetSelection();
+
+            curClient = client.SelectedItem as Persons;
+            car.ItemsSource = dc.Cars.Where(c => c.Persons == curClient);
         }//client_SelectionChanged
 
         private void car_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            idCar = dc.Cars.Where(c => c.Number == car.SelectedItem.ToString()).Select(c => c.Id).Single();
-            malfunction.ItemsSource = dc.Works.Where(w => w.Bid.Appeal.CarId == idCar).GroupBy(w => w.Attire.Malfunction.Name).Select(g=> g.Key);
+            curCar = car.SelectedItem as Cars;
+            malfunction.ItemsSource = dc.CarMalfunctions.Where(cm => cm.Cars == curCar).Select(cm => cm.Malfunctions);
         }//car_SelectionChanged
 
+        private void malfunction_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            curMalfunnction = malfunction.SelectedItem as Malfunctions;
+        }// malfunction_SelectionChanged
 
         private void do_Click(object sender, RoutedEventArgs e)
         {
             if (client.SelectedIndex < 0 || car.SelectedIndex < 0 || malfunction.SelectedIndex < 0) return;
 
-            idBid = dc.Bids.Where(b => b.Appeal.CarId == idCar && b.Appeal.ClientId == idClient).Select(b => b.Id).ToList();
-            dg.ItemsSource = dc.Works
-                                    .Where(w => idBid.Contains(w.BidId) && w.Attire.Malfunction.Name == malfunction.SelectedItem.ToString())
-                                    .Select(w => new { Работник = w.Attire.Employee.Surname, Принято = w.Bid.Appeal.dateAppeal.ToShortDateString(), Здано = w.Bid.FinishDate.ToShortDateString() });
+            dg.ItemsSource = dc.Executors.Where(ex => ex.OrderServices.CarMalfunctions.Malfunctions == curMalfunnction 
+                                                   && ex.OrderServices.CarMalfunctions.Cars == curCar)
+                                         .Select(ex => new {
+                                             Работник = ex.Employees,
+                                             Принято = ex.OrderServices.Orders.ShortBeginDate,
+                                             Сдано = ex.OrderServices.Orders.ShortFinishDate
+                                         });
         }//do_Click
 
-
-
-
-
+        private void ResetSelection()
+        {
+            car.SelectedItem = null;
+            malfunction.SelectedItem = null;
+        }// ResetSelection
     }
 }

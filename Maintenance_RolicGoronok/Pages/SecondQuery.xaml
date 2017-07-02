@@ -16,7 +16,10 @@
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
             <Label Content="Введите фамилия владельца: " FontSize="18" Width="270"/>
-            <TextBox x:Name="personSurname" Width="150" Height="30"/>
+            <TextBox x:Name="personSurname" Width="150" Height="30"
+                     IsReadOnly="True">
+                Временно не работает
+            </TextBox>
             <Button x:Name="do" Margin="10 0 0 0" Content="Выполнить" Style="{DynamicResource Button}" Click="do_Click"/>
         </StackPanel>
 

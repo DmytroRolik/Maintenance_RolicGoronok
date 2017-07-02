@@ -45,10 +45,10 @@ namespace Maintenance_RolicGoronok
         private void Show(string Number)
         {
             dg.ItemsSource = dc.Cars.Where(c => c.Number == Number).Select(c => new {
-                Фамилия = c.Owner.Surname,
-                Имя = c.Owner.Name,
-                Отчество = c.Owner.Patronymic,
-                Адрес = c.Owner.Address
+                Фамилия = c.Persons.Surname,
+                Имя = c.Persons.Name,
+                Отчество = c.Persons.Patronymic,
+                Адрес = c.Persons.Address
             });
         }//Show
     }

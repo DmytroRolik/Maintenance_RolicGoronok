@@ -21,9 +21,11 @@ namespace Maintenance_RolicGoronok
     public partial class BidClient : Page
     {
         MaintenanceDataContext dc = new MaintenanceDataContext();
-        List<Garbs> listGarbs = new List<Garbs>();                  // Колекция нарядов
-        int AppealNewId, BidNewId;                                  // Поля для хранения  
 
+        Orders curOrder = new Orders();
+        List<CarMalfunctions> carMalfunctions = new List<CarMalfunctions>();
+        List<OrderServices> services = new List<OrderServices>();
+        List<Executors> curExecutors = new List<Executors>();
 
         public BidClient()
         {
@@ -35,19 +37,21 @@ namespace Maintenance_RolicGoronok
         private void Bid_Loaded(object sender, RoutedEventArgs e)
         {
             // Загружаем в ComboBox client коллекцию клиентов
-            client.ItemsSource = dc.Clients.Select(p => new { Фамилия = p.Surname + " " + p.Name[0] + "." + p.Patronymic[0] }).Select(p => p.Фамилия);
+            client.ItemsSource = dc.Persons;
 
             // Загружаем в ComboBox avto коллекцию номеров машин
-            avto.ItemsSource = dc.Cars.Select(c => c.Number);
+            avto.ItemsSource = dc.Cars;
 
             // Загружаем в ListView lvMalfun коллекцию неисправностей
-            lvMalfun.ItemsSource = dc.Malfunctions.OrderBy(m => m.Name).Select(m => m.Name);
+            lvMalfun.ItemsSource = dc.Malfunctions.OrderBy(m => m.Name);
 
             // Загружаем в ListView lvEmpl коллекцию работников
-            lvEmpl.ItemsSource = dc.Employees.Select(em => em.Surname + " " + em.Name[0] + "." + em.Patronymic[0]);
+            lvEmpl.ItemsSource = dc.Employees;
 
             // Загружаем в ListView lvServices коллекцию услуг
-            lvServices.ItemsSource = dc.ServicesInfos.OrderBy(s => s.Name).Select(s => s.Name);
+            lvServices.ItemsSource = dc.ServicesInfos;
+
+            curOrder.IsFinished = false;
         }//Bid_Loaded
 
         // При нажатии на кнопку новый клиент
@@ -56,7 +60,7 @@ namespace Maintenance_RolicGoronok
             // Открываем окно для создания клиента
             new AddNewClient().ShowDialog();
             // Обновляем в ComboBox client записи о клиентах
-            client.ItemsSource = dc.Clients.Select(p => new { Фамилия = p.Surname + " " + p.Name[0] + "." + p.Patronymic[0] }).OrderBy(p => p.Фамилия).Select(p => p.Фамилия);
+            client.ItemsSource = dc.Persons;
         }//addClient_Click
 
         // При нажатии на кнопку новый авто
@@ -65,166 +69,123 @@ namespace Maintenance_RolicGoronok
             // Открываем окно для создания клиента
             new AddNewCar().ShowDialog();
             // Обновляем в ComboBox avto записи о машинах
-            avto.ItemsSource = dc.Cars.Select(c => c.Number);
+            avto.ItemsSource = dc.Cars;
         }
 
         // При выборе Номера автомобиля в comboBox avto выводим краткую информацию об авто
         private void avto_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            dgAvto.ItemsSource = dc.Cars.Where(c => c.Number == avto.SelectedItem.ToString()).Select(c => new { Модель = c.Model.Name, Цвет = c.Color, Владелец = c.Owner.Surname });
+            dgAvto.ItemsSource = dc.Cars.Where(c => c == avto.SelectedItem as Cars)
+                                        .Select(c => new { Модель = c.Models.Name, Цвет = c.Color, Владелец = c.Persons });
+
+            curOrder.Cars = avto.SelectedItem as Cars;
         }//avto_SelectionChanged
 
 
         // При выборе Клиента в comboBox client  выводим краткую информацию о клиенте
         private void client_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            dgClient.ItemsSource = dc.Clients.Where(p => p.Surname + " " + p.Name[0] + "." + p.Patronymic[0] == client.SelectedItem.ToString()).Select(p => new { Паспорт = p.Passport, Рожден = p.BirthDate.Day + "." + p.BirthDate.Month + "." + p.BirthDate.Year });
+            dgClient.ItemsSource = dc.Persons.Where(p => p == client.SelectedItem as Persons)
+                                             .Select(p => new { Паспорт = p.Passport, Рожден = p.ShortBirthDate });
+
+            curOrder.Persons = client.SelectedItem as Persons;
         }//client_SelectionChanged
 
 
         // Собираем данные о наряде в коллекцию
-        private void add_Click(object sender, RoutedEventArgs e)
+        private void addService_Click(object sender, RoutedEventArgs e)
         {
-            if (FieldsAreFilledForAttire()) { MessageBox.Show("Не все данные о наряде выбраны"); return; }
-            // Получаем Ид Неисправности, Ид Работника, Ид Услуги
-            int MalfunId = dc.Malfunctions.Where(m => m.Name == lvMalfun.SelectedItem.ToString()).Select(m => m.Id).Single();
-            int EmployeeId = dc.Employees.Where(em => em.Surname + " " + em.Name[0] + "." + em.Patronymic[0] == lvEmpl.SelectedItem.ToString()).Select(em => em.Id).Single();
-            int ServecId = dc.ServicesInfos.Where(s => s.Name == lvServices.SelectedItem.ToString()).Select(s => s.Id).Single();
+            // проверка были ли введены данные
+            if (FieldsAreNotFilledForOrder()) {
+                MessageBox.Show("Не все данные для заказа были введены", "Внимание", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return;
+            }// if
 
-            // Создаем объект наряд
-            Garbs garb = new Garbs(MalfunId, lvMalfun.SelectedItem.ToString(), EmployeeId, lvEmpl.SelectedItem.ToString(), ServecId, lvServices.SelectedItem.ToString());
+            if (FieldsAreNotFilledForServices()) {
+                MessageBox.Show("Не все данные по услугам были введены", "Внимание", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return;
+            }// if
 
-            // Добавляем объект в коллекцию нарядов
-            listGarbs.Add(garb);
+            // добавление данных
+            CarMalfunctions curCarMalfunction = GetCarMalfunction();
+            OrderServices curService = GetOrderService(curCarMalfunction);
 
-            dgattire.ItemsSource = null;
-            // Загружаем коллекцию в datagrid с Нарядами
-            dgattire.ItemsSource = listGarbs;
+            carMalfunctions.Add(curCarMalfunction);
+            services.Add(curService);
+            curExecutors.AddRange(GetExecutors(curService));
+
+            SetItemSourceForDgService();
         }//add_Click
 
 
         // При нажатии Добавить заявку
-        private void addBids_Click(object sender, RoutedEventArgs e)
+        private void addOrder_Click(object sender, RoutedEventArgs e)
         {
-            if (FieldsAreFilledForBid()) { MessageBox.Show("Не все данные о заявке введены"); return; }
-            // Обращения  на станцию техобслуживания 
-            AddAppeal();
-            // Заявка  на устранения неисправности и услуги  
-            AddBids();
-            // Метод заполняет Наряд и добавляет его в работы
-            AddAttire();
-            MessageBox.Show("Заявка сформирована");
-
+            try {
+                dc.Executors.InsertAllOnSubmit(curExecutors);
+                dc.SubmitChanges();
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }// try-catch
         }//addBids_Click
 
 
-        // Метод добавляет обращения  на станцию техобслуживания 
-        private void AddAppeal()
-        {
-            Appeal appeal = new Appeal();
-            appeal.dateAppeal = dateFrom.SelectedDate.Value;
-            appeal.CarId = dc.Cars.Where(c => c.Number == avto.SelectedItem.ToString()).Select(c => c.Id).Single();
-            appeal.ClientId = dc.Clients.Where(cl => cl.Surname + " " + cl.Name[0] + "." + cl.Patronymic[0] == client.SelectedItem.ToString()).Select(cl => cl.Id).Single();
-
-            List<Appeal> listAppeal = new List<Appeal>();
-            listAppeal.Add(appeal);
-
-            // Добавляем запись в базу
-            dc.GetTable<Appeal>().InsertAllOnSubmit(listAppeal);
-            SubmitChanges();
-            // Получаем Ид новой записи
-            AppealNewId = listAppeal[0].Id;
-        }//AddAppeal
-
-
-        // Метод добовляет заявка  на устранения неисправности и услуги  
-        private void AddBids()
-        {
-            Bid bid = new Bid();
-            bid.AppealId = AppealNewId;
-            bid.FinishDate = dateTo.SelectedDate.Value;
-
-            List<Bid> listBid = new List<Bid>();
-
-            listBid.Add(bid);
-
-            // Добавляем запись в базу
-            dc.GetTable<Bid>().InsertAllOnSubmit(listBid);
-            SubmitChanges();
-
-            // Получаем Ид новой записи
-            BidNewId = listBid[0].Id;
-        }// AddBids
-
-
-        // Метод заполняет Наряд и добавляет его в работы
-        private void AddAttire()
-        {
-            for (int i = 0; i < listGarbs.Count; i++)
-            {
-                Attire attire = new Attire();
-                attire.MalfunctionId = listGarbs[i].MalfunId;
-                attire.ServicesInfoId = listGarbs[i].ServecId;
-                attire.EmployeeId = listGarbs[i].EmployeeId;
-
-                List<Attire> listAttire = new List<Attire>();
-                listAttire.Add(attire);
-
-                // Добавляем запись в базу
-                dc.GetTable<Attire>().InsertAllOnSubmit(listAttire);
-                SubmitChanges();
-
-                // Получаем Ид новой записи
-                int AttireNewId = listAttire[0].Id;
-
-                AddWork(AttireNewId);
-            }
-        }//AddAttire
-
-        // Метод  добавляет  работу
-        private void AddWork(int AttireNewId)
-        {
-            Work work = new Work();
-            work.AttireId = AttireNewId;
-            work.BidId = BidNewId;
-
-            List<Work> listWork = new List<Work>();
-
-            listWork.Add(work);
-
-            // Добавляем запись в базу
-            dc.GetTable<Work>().InsertAllOnSubmit(listWork);
-            SubmitChanges();
-        }//AddWork
-
-        private void SubmitChanges()
-        {
-            try
-            {
-                dc.SubmitChanges();
-            }
-            catch (Exception f)
-            {
-                MessageBox.Show(f.Message);
-                dc.SubmitChanges();
-            }//try-catch
-        }
-
-
         // Метод проверяет все ли данные для наряда введены
-        private bool FieldsAreFilledForAttire()
+        private bool FieldsAreNotFilledForServices()
         {
-            if (lvEmpl.SelectedItem == null || lvMalfun.SelectedItem == null || lvServices.SelectedItem == null) return true;
-            return false;
+            return lvEmpl.SelectedItem == null ||
+                   lvMalfun.SelectedItem == null ||
+                   lvServices.SelectedItem == null;
         }//FieldsAreFilled
 
         // Метод проверяет все ли данные для наряда введены
-        private bool FieldsAreFilledForBid()
+        private bool FieldsAreNotFilledForOrder()
         {
-            if (listGarbs.Count == 0) return true;
-            if (client.SelectedItem == null || avto.SelectedItem == null) return true;
-            if (dateFrom.SelectedDate == null || dateTo.SelectedDate == null) return true;
-            return false;
+            return //listGarbs.Count == 0 ||
+                   client.SelectedItem == null ||
+                   avto.SelectedItem == null ||
+                   dateFrom.SelectedDate == null ||
+                   dateTo.SelectedDate == null;
         }//FieldsAreFilled
+
+        private void dateFrom_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            curOrder.BeginDate = (sender as DatePicker).SelectedDate.Value;
+        }// dateFrom_SelectedDateChanged
+
+        private void dateTo_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            curOrder.FinishDate = (sender as DatePicker).SelectedDate.Value;
+        }// dateTo_SelectedDateChanged
+
+        private CarMalfunctions GetCarMalfunction()
+        {
+            return new CarMalfunctions { Cars = curOrder.Cars, Malfunctions = lvMalfun.SelectedItem as Malfunctions };
+        }// GetCarMalfunction
+
+        private OrderServices GetOrderService(CarMalfunctions curMalfunction)
+        {
+            return new OrderServices { Orders = curOrder, CarMalfunctions = curMalfunction, ServicesInfos = lvServices.SelectedItem as ServicesInfos };
+        }// GetOrderService
+
+        private List<Executors> GetExecutors(OrderServices curService)
+        {
+            List<Executors> executors = new List<Executors>();
+
+            foreach(Employees emp in lvEmpl.SelectedItems) {
+                executors.Add(new Executors { Employees = emp, OrderServices = curService });
+            }// foreach
+
+            return executors;
+        }// GetExecutors
+
+        private void SetItemSourceForDgService()
+        {
+            if (dgService.ItemsSource != null)
+                dgService.ItemsSource = null;
+
+            dgService.ItemsSource = curExecutors;
+        }// SetItemSourceForDgService
     }
 }
