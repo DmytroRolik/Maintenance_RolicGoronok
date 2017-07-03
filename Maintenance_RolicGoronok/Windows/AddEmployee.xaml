@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Maintenance_RolicGoronok"
         mc:Ignorable="d"
-        Title="Новый работник" Height="400" Width="420" WindowStartupLocation="CenterScreen" Background="WhiteSmoke">
+        Title="Новый работник" Height="450" Width="420" WindowStartupLocation="CenterScreen" Background="WhiteSmoke">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>

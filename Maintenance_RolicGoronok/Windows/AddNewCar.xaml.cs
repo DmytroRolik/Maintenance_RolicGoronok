@@ -19,8 +19,7 @@ namespace Maintenance_RolicGoronok
     /// </summary>
     public partial class AddNewCar : Window
     {
-        MaintenanceDataContext dc;
-        int idmodel, idowner;
+        MaintenanceDataContext dc = new MaintenanceDataContext();
         public AddNewCar()
         {
             InitializeComponent();
@@ -30,12 +29,10 @@ namespace Maintenance_RolicGoronok
         // При загрузке окна 
         void AddNewCar_Loaded(object sender, RoutedEventArgs e)
         {
-            using (dc = new MaintenanceDataContext()) {
-                // Все модели в comboBox model
-                model.ItemsSource = dc.Models;
-                // Все персоны в comboBox owner
-                owner.ItemsSource = dc.Persons;
-            }// using
+            // Все модели в comboBox model
+            model.ItemsSource = dc.Models;
+            // Все персоны в comboBox owner
+            owner.ItemsSource = dc.Persons;
         }// AddNewCar_Loaded
 
 
@@ -44,20 +41,16 @@ namespace Maintenance_RolicGoronok
         {
             new AddNewOwner().ShowDialog();
 
-            using (dc = new MaintenanceDataContext()) {
-                // Обновляем персоны в comboBox owner
-                owner.ItemsSource = dc.Persons;
-            }// using
+            // Обновляем персоны в comboBox owner
+            owner.ItemsSource = dc.Persons;
         }// addOwner_Click
 
         private void addModel_Click(object sender, RoutedEventArgs e)
         {
             new AddModel().ShowDialog();
 
-            using (dc = new MaintenanceDataContext()) {
-                // Все модели в comboBox model
-                model.ItemsSource = dc.Models;
-            }// using
+            // Все модели в comboBox model
+            model.ItemsSource = dc.Models;
         }// addModel_Click
 
         private void add_Click(object sender, RoutedEventArgs e)
@@ -65,17 +58,15 @@ namespace Maintenance_RolicGoronok
             //проверяет все ли данные введены
             if (FieldsAreNotFilled()) { MessageBox.Show("Не все данные введены"); return; }
 
-            using (dc = new MaintenanceDataContext()) {
-                dc.Cars.InsertOnSubmit(GetCar());
+            dc.Cars.InsertOnSubmit(GetCar());
 
-                try {
-                    dc.SubmitChanges();
-                    MessageBox.Show("Авто добавлено");
-                }
-                catch (Exception ex) {
-                    MessageBox.Show(ex.Message);
-                }// try-catch
-            }// using
+            try {
+                dc.SubmitChanges();
+                MessageBox.Show("Авто добавлено");
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message);
+            }// try-catch
         }// add_Click
 
 

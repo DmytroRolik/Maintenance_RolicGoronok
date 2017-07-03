@@ -22,7 +22,6 @@ namespace Maintenance_RolicGoronok
     public partial class ArchiveBid : Page
     {
         MaintenanceDataContext dc = new MaintenanceDataContext();
-        int id;
         public ArchiveBid()
         {
             InitializeComponent();

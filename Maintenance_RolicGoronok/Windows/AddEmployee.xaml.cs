@@ -20,7 +20,6 @@ namespace Maintenance_RolicGoronok
     public partial class AddEmployee : Window
     {
         MaintenanceDataContext dc = new MaintenanceDataContext();
-        int experience, idcategory, idspecialiti;
         public AddEmployee()
         {
             InitializeComponent();
@@ -79,11 +78,11 @@ namespace Maintenance_RolicGoronok
             int exp;
             return string.IsNullOrWhiteSpace(name.Text) ||
                    string.IsNullOrWhiteSpace(surname.Text) ||
-                   dob.SelectedDate.HasValue ||
+                   !dob.SelectedDate.HasValue ||
                    string.IsNullOrWhiteSpace(address.Text) ||
                    string.IsNullOrWhiteSpace(passport.Text) ||
                    speciality.SelectedItem == null ||
-                   int.TryParse(ex.Text, out exp) ||
+                   !int.TryParse(ex.Text, out exp) ||
                    category.SelectedItem == null;
         }//FieldsAreNotFilled
 

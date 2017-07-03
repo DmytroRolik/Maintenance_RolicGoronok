@@ -55,7 +55,7 @@ namespace Maintenance_RolicGoronok
                 || string.IsNullOrWhiteSpace(surname.Text)
                 || string.IsNullOrWhiteSpace(passport.Text)
                 || string.IsNullOrWhiteSpace(licen.Text)
-                || dob.SelectedDate == null;
+                || !dob.SelectedDate.HasValue;
         }//FieldsAreNotFilled
 
         // Метод Parsing извлекаем данные из окна и возвращаем их в виде объкта Client
